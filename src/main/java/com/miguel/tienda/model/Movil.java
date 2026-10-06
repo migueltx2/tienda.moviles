@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.smartcardio.CardTerminal;
+
 @Entity
 public class Movil {
 	@Id
@@ -44,6 +46,9 @@ public class Movil {
 	//Se basa en poner anotaciones de validacion a cada campo
 
 
+	//Version
+	private String sku; //stock keeping unit
+
 	//Este campo va a ser solo para gestionar la subida de archivo, el input type file
 	//Esto es solo para recibir facilmente la imagen del form
 	//@Transient es para decir que el campo sea ignorado de cara a la base de datos
@@ -54,6 +59,16 @@ public class Movil {
 	@Lob //para tipos de columna, p.ej blob o clob, para guardar imagenes/archivos/arrays de bytes
 	private byte[] imagenPortada;
 
+	@ManyToOne
+	private Categoria categoria;
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
 	public Movil() {
 	}
@@ -66,6 +81,19 @@ public class Movil {
 		this.ram = ram;
 		this.peso = peso;
 		this.precio = precio;
+	}
+
+	public Movil(String nombre, String modelo, int almacenamiento, int ram, int peso, int precio, String sku, MultipartFile fotoSubida, byte[] imagenPortada) {
+		this.nombre = nombre;
+		this.modelo = modelo;
+		this.almacenamiento = almacenamiento;
+		this.ram = ram;
+		this.peso = peso;
+		this.precio = precio;
+		this.sku = sku;
+		this.fotoSubida = fotoSubida;
+		this.imagenPortada = imagenPortada;
+		this.categoria = categoria;
 	}
 
 	public long getId() {
@@ -138,6 +166,14 @@ public class Movil {
 
 	public void setImagenPortada(byte[] imagenPortada) {
 		this.imagenPortada = imagenPortada;
+	}
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
 	}
 
 	@Override

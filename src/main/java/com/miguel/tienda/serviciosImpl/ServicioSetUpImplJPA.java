@@ -1,0 +1,101 @@
+package com.miguel.tienda.serviciosImpl;
+
+import com.miguel.tienda.model.Categoria;
+import com.miguel.tienda.model.Configuracion;
+import com.miguel.tienda.model.Movil;
+import com.miguel.tienda.servicios.ServicioSetUp;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.sql.SQLOutput;
+
+
+@Service
+@Transactional
+public class ServicioSetUpImplJPA implements ServicioSetUp {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    public void prepararRegistrosIniciales() {
+        //preparar unos registros si la base de datos esta vacia
+        Configuracion configuracion = null;
+
+        // la idea presentada se basa en que va a haber un solo registro en la tabla configuracion
+        // Ese registro nos indicara si la base de datos ya tiene sus registros iniciales
+        // Como por ejemplo productos, categorias, usuarios, pedidos, etc.
+
+        // En SQL seria como: select * from configuracion as c
+
+        try {
+            configuracion = (Configuracion) entityManager.createQuery("select c from Configuracion c").getSingleResult();
+        }catch (NoResultException e){
+            System.out.println("No se encontro un unico registro en la tabla de configuracion");
+        }
+        if (configuracion == null || ! configuracion.isRegistrosiIniciales()){
+            //Hago todos los registros iniciales
+            // Categorias
+            Categoria samsung = new Categoria("Samsung", "Samsung");
+            Categoria apple = new Categoria("Apple", "Apple");
+            Categoria xiaomi = new Categoria("Xiaomi", "Xiaomi");
+
+            entityManager.persist(samsung);
+            entityManager.persist(apple);
+            entityManager.persist(xiaomi);
+
+            //Productos
+            Movil movil1 = new Movil("Samsung Galaxy S9", "SM079", 516, 16, 150, 899, "MOVIL-001", null, null);
+            movil1.setCategoria(samsung);
+            entityManager.persist(movil1);
+
+            Movil movil2 = new Movil("iPhone 16", "APPLEPHONE016", 256, 8, 112, 799, "MOVIL-002", null, null);
+            movil2.setCategoria(apple);
+            entityManager.persist(movil2);
+
+            Movil movil3 = new Movil("Samsung Galaxy S24", "SM S921B", 256, 8, 167, 699, "MOVIL-003", null, null);
+            movil3.setCategoria(samsung);
+            entityManager.persist(movil3);
+
+            Movil movil4 = new Movil("Samsung Galaxy A55", "SM A556B", 128, 8, 213, 399, "MOVIL-004", null, null);
+            movil4.setCategoria(samsung);
+            entityManager.persist(movil4);
+
+            Movil movil5 = new Movil("iPhone 15", "APPLEPHONE015", 128, 6, 171, 699, "MOVIL-005", null, null);
+            movil5.setCategoria(apple);
+            entityManager.persist(movil5);
+
+            Movil movil6 = new Movil("iPhone 14", "APPLEPHONE014", 128, 6, 172, 599, "MOVIL-006", null, null);
+            movil6.setCategoria(apple);
+            entityManager.persist(movil6);
+
+            Movil movil7 = new Movil("Xiaomi Redmi Note 13", "REDMI NOTE 13", 256, 8, 188, 249, "MOVIL-007", null, null);
+            movil7.setCategoria(xiaomi);
+            entityManager.persist(movil7);
+
+            Movil movil8 = new Movil("Xiaomi 14", "XIAOMI 14", 512, 12, 193, 799, "MOVIL-008", null, null);
+            movil8.setCategoria(xiaomi);
+            entityManager.persist(movil8);
+
+            Movil movil9 = new Movil("Xiaomi Poco X6", "POCO X6", 256, 12, 181, 349, "MOVIL-009", null, null);
+            movil9.setCategoria(xiaomi);
+            entityManager.persist(movil9);
+
+            Movil movil10 = new Movil("Xiaomi Redmi 13", "REDMI 13", 128, 6, 205, 199, "MOVIL-010", null, null);
+            movil10.setCategoria(xiaomi);
+            entityManager.persist(movil10);
+
+            //Una vez realizados los registros iniciales guardo el registro en la tabla Configuracion indicando que todo esta ok
+            configuracion = new Configuracion();
+            configuracion.setRegistrosiIniciales(true);
+            entityManager.persist(configuracion);
+        }
+
+
+
+    }
+}
