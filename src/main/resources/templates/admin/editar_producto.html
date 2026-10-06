@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro Movil</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body>
+    <!-- Navvar -->
+    <div th:insert="fragments/general.html :: menu" class="relative z-10"></div>
+
+    <!-- Container -->
+    <div class="min-h-screen flex flex-col items-center mt-20 ">
+        <!-- Tarjeta -->
+        <div class="flex flex-col border border-slate-200 rounded-2xl shadow-lg p-8 bg-white gap-5">
+            <!-- Titulo -->
+            <div>
+                <h1 class="text-2xl">Modifica los datos del nuevo producto: </h1>
+            </div>
+
+            <!-- Contenedor formulario -->
+            <div>
+                <form action="#" th:action="guardarCambiosMovil" th:object="${movilEditar}" method="post"
+                    enctype="multipart/form-data" class="flex flex-col gap-3">
+
+                    <!-- Nombre -->
+                    <div class="flex flex-col">
+                        <span class="text-sm">Nombre</span>
+                        <input type="text" th:field="*{nombre}" placeholder="Introduce el nombre..." class="border border-gray-300 rounded-lg h-9 pl-1.5 focus:border-gray-400 focus:ring-2 focus:ring-gray-300 focus:outline-none transition duration-200">
+                        <span class="text-red-500" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+                    </div>
+
+                    <div class="flex flex-col">
+                        <span class="text-sm">Modelo</span>
+                        <input type="text" th:field="*{modelo}" placeholder="Introduce el modelo..." class="border border-gray-300 rounded-lg h-9 pl-1.5 focus:border-gray-400 focus:ring-2 focus:ring-gray-300 focus:outline-none transition duration-200">
+                        <span class="text-red-500" th:if="${#fields.hasErrors('modelo')}" th:errors="*{modelo}"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm">Almacenamiento</span>
+                        <input type="number" th:field="*{almacenamiento}" placeholder="Introduce el nombre..." class="border border-gray-300 rounded-lg h-9 pl-1.5 focus:border-gray-400 focus:ring-2 focus:ring-gray-300 focus:outline-none transition duration-200">
+                        <span class="text-red-500" th:if="${#fields.hasErrors('almacenamiento')}" th:errors="*{almacenamiento}"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm">RAM</span>
+                        <input type="number" th:field="*{ram}" placeholder="Introduce el nombre..." class="border border-gray-300 rounded-lg h-9 pl-1.5 focus:border-gray-400 focus:ring-2 focus:ring-gray-300 focus:outline-none transition duration-200">
+                        <span class="text-red-500" th:if="${#fields.hasErrors('ram')}" th:errors="*{ram}"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm">Peso</span>
+                        <input type="number" th:field="*{peso}" placeholder="Introduce el nombre..." class="border border-gray-300 rounded-lg h-9 pl-1.5 focus:border-gray-400 focus:ring-2 focus:ring-gray-300 focus:outline-none transition duration-200">
+                        <span class="text-red-500" th:if="${#fields.hasErrors('peso')}" th:errors="*{peso}"></span>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="text-sm">Precio</span>
+                        <input type="number" th:field="*{precio}" placeholder="Introduce el nombre..." class="border border-gray-300 rounded-lg h-9 pl-1.5 focus:border-gray-400 focus:ring-2 focus:ring-gray-300 focus:outline-none transition duration-200">
+                        <span class="text-red-500" th:if="${#fields.hasErrors('precio')}" th:errors="*{precio}"></span>
+                    </div>
+
+                    Foto actual
+                    <img alt="" th:src="@{/mostrar_imagen(id=${movilEditar.id})}" class="size-32">
+
+                    <div class="flex flex-col">
+                        <span class="text-sm">Foto</span>
+                        <input type="file" th:field="*{fotoSubida}" class="file:px-4 file:py-2 file:m-1 file:mr-2 file:rounded-lg file:border-0 file:bg-slate-100 file:text-slate-600 file:cursor-pointer hover:file:bg-sky-100 hover:file:text-sky-600 file:transition file:duration-200 hover:file:scale-105">
+                    </div>
+
+                    <input type="hidden" th:field="*{id}">
+
+                    <!-- Submit -->
+                    <div class="flex justify-center">
+                        <input class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105 hover:cursor-pointer" type="submit" value="GUARDAR">
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

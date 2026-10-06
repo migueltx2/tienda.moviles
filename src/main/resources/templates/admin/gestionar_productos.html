@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+        <div th:insert="fragments/general.html :: menu"></div>
+    </div>
+
+    <div class="flex justify-center text-3xl m-3">
+        <h1 class="">Gestion De Moviles</h1>
+    </div>
+
+
+    <div>
+        <a href="registrarMovil"
+            class="inline-block m-3 px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">Reigstrar
+            movil</a>
+    </div>
+
+
+    <!-- Contenedor grid -->
+    <div class="grid grid-cols-4 m-12 gap-5">
+        <div th:each="m : ${moviles}" class="flex p-3 border shadow-lg rounded-lg transition hover:scale-105 gap-16">
+            <div class="flex flex-col justify-between">
+                <div>
+                    <div>
+                        <span>Titulo: </span>
+                        <span th:text="${m.nombre}"></span>
+                    </div>
+
+                    <div>
+                        <span>Modelo: </span>
+                        <span th:text="${m.modelo}"></span>
+                    </div>
+
+                    <div>
+                        <span>Almacenamiento: </span>
+                        <span th:text="${m.Almacenamiento}"></span>
+                    </div>
+
+                    <div>
+                        <span>Ram: </span>
+                        <span th:text="${m.ram}"></span>
+                    </div>
+
+                    <div>
+                        <span>Peso: </span>
+                        <span th:text="${m.peso}"></span>
+                    </div>
+
+                    <div>
+                        <span>Precio: </span>
+                        <span th:text="${m.precio}"></span>
+                    </div>
+                </div>
+
+                <!-- Contenedor boton editar y borrar -->
+                <div class="flex justify-between">
+                    <div>
+                        <a th:href="@{${ 'editarMovil?id=' + m.id }}" onclick="return confirm('¿Estas seguro?')" class="px-4 py-2 m-3 inline-block rounded-lg
+                            bg-slate-100 text-slate-600
+                            hover:bg-red-100 hover:text-red-500
+                            transition duration-200 hover:cursor-pointer">EDITAR</a>
+                    </div>
+
+                    <div>
+                        <a th:href="@{${ 'borrarMovil?id=' + m.id }}" onclick="return confirm('¿Estas seguro?')" class="px-4 py-2 m-3 inline-block rounded-lg
+                            bg-slate-100 text-slate-600
+                            hover:bg-red-100 hover:text-red-500
+                            transition duration-200 hover:cursor-pointer">BORRAR</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="">
+                <img alt="" th:src="@{${ '../mostrar_imagen?id=' + m.id }}" class="size-32">
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+{{#.}}
+<!-- esta es la nomenclatura de mustache.js-->
+<!-- con esto indicamos que el html que haya aqui se pueda usar para aplicarlo sobre cada elementos -->
+<div
+   class="flex flex-col m-6 gap-5 border border-slate-200 p-5 rounded-lg shadow-lg hover:scale-105 transition items-center">
+   <!-- Container imagen -->
+   <div>
+      <img alt="" src="mostrar_imagen?id={{id}}" class="size-48">
+   </div>
+
+   <!-- Container especificaciones -->
+   <div class="flex flex-col flex-1 w-full">
+
+      <!-- Textos -->
+      <div class="flex flex-col items-center">
+         <span class="text-3xl font-bold">{{nombre}}</span>
+         <span class="text-4xl text-red-500 m-3">{{precio}}€</span>
+      </div>
+
+      <!-- Ver detalles -->
+      <div class="m-2 self-center font-bold mt-auto ">
+         <a href="#" onclick="mostrar_detalles({{id}})" class="hover:text-blue-400">
+            Ver detalles de producto
+         </a>
+      </div>
+
+      <!-- Cantidad + carrito -->
+      <div class="flex gap-3 justify-between">
+         <input type="number" class="h-8 pl-3 w-1/2 self-center border rounded-md" placeholder="Cantidad...">
+
+         <a href="#"
+            class="px-4 py-2 m-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">
+            Agregar al carrito
+         </a>
+      </div>
+
+   </div>
+</div>
+
+{{/.}}
+
+<!-- <span>Modelo: {{modelo}}</span>
+            <span>Almacenamiento: {{Almacenamiento}}</span>
+            <span>RAM: {{RAM}}</span>
+            <span>Peso: {{Peso}}</span> -->
