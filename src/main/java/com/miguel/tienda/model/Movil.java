@@ -64,6 +64,10 @@ public class Movil {
 	@ManyToOne
 	private Categoria categoria;
 
+	//Para gestionar la id del form  y para otros usos
+	@Transient
+	private int idCategoria;
+
 	public Categoria getCategoria() {
 		return categoria;
 	}
@@ -176,6 +180,14 @@ public class Movil {
 
 	public void setSku(String sku) {
 		this.sku = sku;
+	}
+
+	public int getIdCategoria() {
+		return idCategoria;
+	}
+
+	public void setIdCategoria(int idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 
 	@Override

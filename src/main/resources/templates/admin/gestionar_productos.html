@@ -19,14 +19,63 @@
     </div>
 
 
-    <div>
+    <div class="flex flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row xl:px-12">
+        <h1 class="text-3xl font-semibold text-slate-900">Gestion de moviles</h1>
         <a href="registrarMovil"
-            class="inline-block m-3 px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">Reigstrar
-            movil</a>
+            class="inline-block rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white transition duration-200 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">Registrar movil</a>
     </div>
 
+    
 
     <!-- Contenedor grid -->
+    <div class="grid grid-cols-1 gap-5 px-4 pb-10 sm:grid-cols-2 lg:grid-cols-4 xl:px-12">
+        <article th:each="m : ${moviles}"
+            class="group overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md">
+            <div class="flex h-48 items-center justify-center bg-slate-50 p-5">
+                <img th:alt="${m.nombre}" th:src="@{${ '../mostrar_imagen?id=' + m.id }}"
+                    class="h-full w-full object-contain transition duration-200 group-hover:scale-105">
+            </div>
+
+            <div class="p-5">
+                <div class="mb-4 flex items-start justify-between gap-3">
+                    <div class="min-w-0">
+                        <h2 class="truncate text-lg font-semibold text-slate-900" th:text="${m.nombre}"></h2>
+                        <p class="mt-1 text-sm text-slate-500" th:text="${m.modelo}"></p>
+                    </div>
+                    <p class="shrink-0 text-lg font-bold text-sky-700"><span th:text="${m.precio}"></span> €</p>
+                </div>
+
+                <dl class="grid grid-cols-2 gap-x-4 gap-y-3 border-t border-slate-100 py-4 text-sm">
+                    <div>
+                        <dt class="text-slate-500">Almacenamiento</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800"><span th:text="${m.almacenamiento}"></span> GB</dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">RAM</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800"><span th:text="${m.ram}"></span> GB</dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Peso</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800"><span th:text="${m.peso}"></span> g</dd>
+                    </div>
+                </dl>
+
+                <div class="flex gap-3 border-t border-slate-100 pt-4">
+                    <a th:href="@{${ 'editarMovil?id=' + m.id }}" onclick="return confirm('¿Estas seguro?')"
+                        class="flex-1 rounded-md bg-sky-50 px-3 py-2 text-center text-sm font-semibold text-sky-700 transition hover:bg-sky-100">Editar</a>
+                    <a th:href="@{${ 'borrarMovil?id=' + m.id }}" onclick="return confirm('¿Estas seguro?')"
+                        class="flex-1 rounded-md bg-slate-100 px-3 py-2 text-center text-sm font-semibold text-slate-600 transition hover:bg-red-50 hover:text-red-600">Borrar</a>
+                </div>
+            </div>
+        </article>
+    </div>
+
+</body>
+
+</html>
+
+
+<!-- Contenedor grid
     <div class="grid grid-cols-4 m-12 gap-5">
         <div th:each="m : ${moviles}" class="flex p-3 border shadow-lg rounded-lg transition hover:scale-105 gap-16">
             <div class="flex flex-col justify-between">
@@ -62,7 +111,7 @@
                     </div>
                 </div>
 
-                <!-- Contenedor boton editar y borrar -->
+                Contenedor boton editar y borrar
                 <div class="flex justify-between">
                     <div>
                         <a th:href="@{${ 'editarMovil?id=' + m.id }}" onclick="return confirm('¿Estas seguro?')" class="px-4 py-2 m-3 inline-block rounded-lg
@@ -85,8 +134,6 @@
             </div>
         </div>
 
-    </div>
+    </div> -->
 
-</body>
 
-</html>

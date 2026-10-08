@@ -19,5 +19,7 @@ public interface ServicioMoviles {
 
     void guardarCambiosMovil(Movil movilEditar) throws Exception;
 
-   List<Map<String, Object>> obtenerJSONmoviles();
+    List<Map<String, Object>> obtenerJSONmoviles();
+
+    Map<String,Object> obtenerJSONMovilPorId(Long id);
 }

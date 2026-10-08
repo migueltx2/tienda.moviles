@@ -1,6 +1,7 @@
 package com.miguel.tienda.controllers;
 
 import com.miguel.tienda.model.Movil;
+import com.miguel.tienda.servicios.ServicioCategorias;
 import com.miguel.tienda.servicios.ServicioMoviles;
 //import com.miguel.tienda.serviciosImpl.ServicioMovilesImplJPA;
 import jakarta.validation.Valid;
@@ -22,6 +23,8 @@ public class ControladorMoviles {
     //Dicho objeto, es el objeto de la clase que tiene @Service class ServicioMovilesImplJPA implements ServicioMoviles
     @Autowired
     private ServicioMoviles servicioMoviles;
+    @Autowired
+    private ServicioCategorias servicioCategorias;
 
     @RequestMapping("gestionarMoviles")
     public String gestionarMoviles(Model model){
@@ -34,6 +37,9 @@ public class ControladorMoviles {
         Movil nuevo = new Movil();
         nuevo.setPrecio(1);
         model.addAttribute("nuevo", nuevo);
+
+        //necesito obtener las categorias para meterlas en ese model de spring
+        model.addAttribute("categorias", servicioCategorias.obtenerCategorias());
         return "admin/registro_producto";
     }
 

@@ -1,6 +1,7 @@
 package com.miguel.tienda.serviciosImpl;
 
 import com.miguel.tienda.constantesSQL.ConstantesSQL;
+import com.miguel.tienda.model.Categoria;
 import com.miguel.tienda.model.Movil;
 import com.miguel.tienda.servicios.ServicioMoviles;
 import jakarta.persistence.EntityManager;
@@ -34,6 +35,10 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
 
             throw new RuntimeException(e);
         }
+
+        // de la idCategoria recibida, hay que asignar la categoria de la base de datos
+        Categoria c = entityManager.find(Categoria.class, m.getCategoria());
+        m.setCategoria(c);
 
         entityManager.persist(m);
     }
@@ -101,6 +106,11 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
 
 
         return nativeQuery.getResultList();
+    }
+
+    @Override
+    public Map<String, Object> obtenerJSONMovilPorId(Long id) {
+        return (Map<String, Object>) ((NativeQueryImpl)entityManager.createNativeQuery(ConstantesSQL.SQL_OBTENER_MOVIL_JSON)).setParameter("id", id).setTupleTransformer(AliasToEntityMapResultTransformer.INSTANCE).getResultList().get(0);
     }
 
 

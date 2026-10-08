@@ -37,9 +37,9 @@ public class MovilesREST {
     //Para testear: localhost:8080/restMoviles/listar
 
     @RequestMapping("obtener-movil")
-    public Movil obtenerMovil(@RequestParam("id") Long id){
+    public Map<String,Object> obtenerMovil(@RequestParam("id") Long id){
         //estos return de un @RestCOntroller devuelven un json
-        return servicioMoviles.obtenerMovilPorId(id);
+        return servicioMoviles.obtenerJSONMovilPorId(id);
     }
 
 
