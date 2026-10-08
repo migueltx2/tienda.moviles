@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 //Un servicio rest se le puede llamar REST
 
@@ -20,10 +21,18 @@ public class MovilesREST {
     @Autowired
     private ServicioMoviles servicioMoviles;
 
+    //@RequestMapping("listar")
+    //public List<Movil> listar(){
+    //    return servicioMoviles.obtenerMoviles();
+    //}
+
     @RequestMapping("listar")
-    public List<Movil> listar(){
-        return servicioMoviles.obtenerMoviles();
+    public List<Map<String,Object>> listar(){
+        return servicioMoviles.obtenerJSONmoviles();
     }
+
+    //Ahora que se ha complicado un poco, vamos a tomar mas control en deovlver el json con el listado de videojuegos
+
 
     //Para testear: localhost:8080/restMoviles/listar
 

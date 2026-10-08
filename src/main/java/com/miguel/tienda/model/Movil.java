@@ -12,6 +12,8 @@ public class Movil {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
+
+	//@Column(name = "nombre_movil", length = 300)
 	@Size(min = 3, max = 40, message = "El nombre debe tener entre 3 y 40 caracteres")
 	@NotEmpty(message = "Debes insertar un nombre")
 	@Pattern(regexp = "[a-záéíóúñA-ZÁÉÍÓÚÑüÜ 0-9]+", message = "El modelo solo puede tener letras, numeros y espacios")

@@ -6,6 +6,4 @@ package com.miguel.tienda.servicios;
 public interface ServicioSetUp {
     void prepararRegistrosIniciales();
 
-
-
 }

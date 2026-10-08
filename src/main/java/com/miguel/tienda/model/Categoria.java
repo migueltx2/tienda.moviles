@@ -1,5 +1,6 @@
 package com.miguel.tienda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -21,7 +22,8 @@ public class Categoria {
     // ManyToOne: muchas categorias pueden estar asociadas a 1 producto
     // ManyToMany: muchas categorias pueden ser asignadas a muchos productos
 
-    @OneToMany
+    @OneToMany(mappedBy = "categoria")
+    @JsonIgnore
     private List<Movil> moviles = new ArrayList<Movil>();
 
     @Id

@@ -1,14 +1,21 @@
 package com.miguel.tienda.serviciosImpl;
 
+import com.miguel.tienda.constantesSQL.ConstantesSQL;
 import com.miguel.tienda.model.Movil;
 import com.miguel.tienda.servicios.ServicioMoviles;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
+import org.hibernate.query.NativeQuery;
+import org.hibernate.query.sql.internal.NativeQueryImpl;
+import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service //marcas que la clase actua como servicio de datos
 @Transactional // los metodos de la clase se ejecutan como una unica transaccion
@@ -73,4 +80,28 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
         //merge actualiza el registro si ya existe
         //si no existe lo crea
     }
+
+    @Override
+    public List<Map<String, Object>> obtenerJSONmoviles() {
+        //Con JPA hemos asociado categoria a producto
+        //Problema: El json recibido en portada  no es correcto
+        //Solucion: Dejar claro en una consulta a base de datos que informacion va a formar el json que necesitamos importar
+
+        Map<String,Object> json = new HashMap<>();
+        json.put("nombre", "GTAV");
+        json.put("precio", 45);
+        // json.put(56,50); //da error porque lo primero no es un string
+        //para tener el control total, vamos a usar SQL
+        Query consulta = entityManager.createNativeQuery(ConstantesSQL.SQL_OBTENER_MOVILES_JSON);
+        //usar la consulta directamente es mucho mas lioso
+        //que lo siguiente
+        NativeQueryImpl nativeQuery = (NativeQueryImpl) consulta;
+        nativeQuery.setTupleTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+
+
+
+        return nativeQuery.getResultList();
+    }
+
+
 }
