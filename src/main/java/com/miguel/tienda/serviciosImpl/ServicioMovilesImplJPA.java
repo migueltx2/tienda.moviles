@@ -37,7 +37,7 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
         }
 
         // de la idCategoria recibida, hay que asignar la categoria de la base de datos
-        Categoria c = entityManager.find(Categoria.class, m.getCategoria());
+        Categoria c = entityManager.find(Categoria.class, m.getIdCategoria());
         m.setCategoria(c);
 
         entityManager.persist(m);

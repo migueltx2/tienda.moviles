@@ -58,6 +58,10 @@
                         <dt class="text-slate-500">Peso</dt>
                         <dd class="mt-0.5 font-medium text-slate-800"><span th:text="${m.peso}"></span> g</dd>
                     </div>
+                    <div>
+                        <dt class="text-slate-500">Categoria</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800"><span th:text="${m.categoria != null ? m.categoria.nombre : 'Sin categoría'}"></span></dd>
+                    </div>
                 </dl>
 
                 <div class="flex gap-3 border-t border-slate-100 pt-4">
@@ -135,5 +139,4 @@
         </div>
 
     </div> -->
-
 

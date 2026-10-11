@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar usuario</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-sky-50">
+    <div th:insert="fragments/general.html :: menu"></div>
+
+    <main class="flex min-h-screen flex-col items-center px-4 py-12">
+        <section class="w-full max-w-xl rounded-2xl border border-slate-200 bg-white p-8 shadow-lg">
+            <h1 class="mb-6 text-2xl font-semibold text-slate-900">Introduce los datos del nuevo usuario</h1>
+            <form th:action="guardarUsuario" th:object="${nuevo}" method="post" class="flex flex-col gap-4">
+                <div class="flex flex-col gap-1">
+                    <label for="nombre">Nombre</label>
+                    <input id="nombre" type="text" th:field="*{nombre}" class="h-10 rounded-lg border border-gray-300 px-3">
+                    <span class="text-red-500" th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></span>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label for="apellidos">Apellidos</label>
+                    <input id="apellidos" type="text" th:field="*{apellidos}" class="h-10 rounded-lg border border-gray-300 px-3">
+                    <span class="text-red-500" th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}"></span>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" th:field="*{email}" class="h-10 rounded-lg border border-gray-300 px-3">
+                    <span class="text-red-500" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label for="telefono">Telefono</label>
+                    <input id="telefono" type="tel" th:field="*{telefono}" class="h-10 rounded-lg border border-gray-300 px-3">
+                    <span class="text-red-500" th:if="${#fields.hasErrors('telefono')}" th:errors="*{telefono}"></span>
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label for="pass">Contraseña</label>
+                    <input id="pass" name="pass" type="password" minlength="8" maxlength="100" required autocomplete="new-password" class="h-10 rounded-lg border border-gray-300 px-3">
+                    <span class="text-red-500" th:if="${#fields.hasErrors('pass')}" th:errors="*{pass}"></span>
+                </div>
+                <button type="submit" class="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white hover:bg-sky-700">Registrar</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>

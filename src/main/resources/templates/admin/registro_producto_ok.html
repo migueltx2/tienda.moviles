@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movil registrado</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body>
-    <div th:insert="fragments/general.html :: menu"></div>
-
-    <div>
-        Movil registrado correctamente
-    </div>
+<body class="bg-sky-50">
+<div th:insert="fragments/general.html :: menu"></div>
+<main class="flex min-h-screen flex-col items-center justify-center gap-5 px-4">
+    <h1 class="text-2xl font-semibold text-slate-900">Movil registrado correctamente</h1>
+    <a href="gestionarMoviles" class="rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white hover:bg-sky-700">Volver a gestionar moviles</a>
+</main>
 </body>
 </html>

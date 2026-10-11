@@ -102,6 +102,21 @@ public class Movil {
 		this.categoria = categoria;
 	}
 
+	public Movil(long id, String nombre, String modelo, int almacenamiento, int ram, int peso, int precio, String sku, MultipartFile fotoSubida, byte[] imagenPortada, Categoria categoria, int idCategoria) {
+		this.id = id;
+		this.nombre = nombre;
+		this.modelo = modelo;
+		this.almacenamiento = almacenamiento;
+		this.ram = ram;
+		this.peso = peso;
+		this.precio = precio;
+		this.sku = sku;
+		this.fotoSubida = fotoSubida;
+		this.imagenPortada = imagenPortada;
+		this.categoria = categoria;
+		this.idCategoria = idCategoria;
+	}
+
 	public long getId() {
 		return id;
 	}
