@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 //Un servicio rest se le puede llamar REST
-
+//NECESARIO para listar y ver detalles en la parte publica
 
 //@RestController no devuelven vistas/html sino json
 @RestController

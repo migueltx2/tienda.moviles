@@ -70,9 +70,13 @@ public class ControladorMoviles {
 
     @RequestMapping("editarMovil")
     public String editarMovil(@RequestParam("id") Long id, Model model){
-        model.addAttribute("movilEditar",
-            servicioMoviles.obtenerMovilPorId(id));
-            return "admin/editar_producto";
+        Movil movilEditar = servicioMoviles.obtenerMovilPorId(id);
+        if (movilEditar.getCategoria() != null) {
+            movilEditar.setIdCategoria(movilEditar.getCategoria().getId());
+        }
+        model.addAttribute("movilEditar", movilEditar);
+        model.addAttribute("categorias", servicioCategorias.obtenerCategorias());
+        return "admin/editar_producto";
     }
 
     //el metodo va a atender la ruta guardarCambiosVideojuego
@@ -86,6 +90,7 @@ public class ControladorMoviles {
         BindingResult resultadoValidacion,
         Model model) throws Exception{ //model en estos metodos, es para meterle lo que queramos que le llegue a la vista de vuelta en el return
               if ( resultadoValidacion.hasErrors()){
+                model.addAttribute("categorias", servicioCategorias.obtenerCategorias());
                 return "admin/editar_producto";
               } else {
                 servicioMoviles.guardarCambiosMovil(movilEditar);

@@ -1,10 +1,7 @@
 
 package com.miguel.tienda.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,7 +26,7 @@ public class Usuario {
 
     @Pattern(
             regexp = "^[0-9]{9}$",
-            message = "El teléfono debe tener exactamente 9 dígitos"
+            message = "El teléfono debe tener 9 dígitos"
     )
     private String telefono;
 
@@ -40,6 +37,18 @@ public class Usuario {
     @NotBlank(message = "Los apellidos son obligatorios")
     @Size(min = 2, max = 100, message = "Los apellidos deben tener entre 2 y 100 caracteres")
     private String apellidos;
+
+    @OneToOne
+    private Carrito carrito;
+
+
+    public Carrito getCarrito() {
+        return carrito;
+    }
+
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
+    }
 
     public Usuario() {
     }

@@ -81,6 +81,8 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
             );
         }
 
+        Categoria categoria = entityManager.find(Categoria.class, movilEditar.getIdCategoria());
+        movilEditar.setCategoria(categoria);
         entityManager.merge(movilEditar);
         //merge actualiza el registro si ya existe
         //si no existe lo crea

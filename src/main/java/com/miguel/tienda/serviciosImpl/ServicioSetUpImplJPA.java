@@ -1,8 +1,6 @@
 package com.miguel.tienda.serviciosImpl;
 
-import com.miguel.tienda.model.Categoria;
-import com.miguel.tienda.model.Configuracion;
-import com.miguel.tienda.model.Movil;
+import com.miguel.tienda.model.*;
 import com.miguel.tienda.servicios.ServicioSetUp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
@@ -101,6 +99,35 @@ public class ServicioSetUpImplJPA implements ServicioSetUp {
             movil10.setCategoria(xiaomi);
             movil10.setImagenPortada(leerImagenInicial("http://localhost:8080/imagenes_productos_iniciales/10.jpg"));
             entityManager.persist(movil10);
+
+            //Vamos a registrar unos usuarios y algun carrito
+
+            Usuario user1 = new Usuario();
+            user1.setNombre("Pepe");
+            user1.setApellidos("Sanchez");
+            user1.setEmail("pepe@gmail.com");
+            user1.setPass("12345678");
+            entityManager.persist(user1);
+
+            //Vamos a prerpar un carrito
+            Carrito carrito1 = new Carrito();
+            carrito1.setUsuario(user1);
+            entityManager.persist(carrito1);
+
+            ProductoCarrito pc1 = new ProductoCarrito();
+            pc1.setCarrito(carrito1);
+            pc1.setMovil(movil1);
+            pc1.setCantidad(3);
+            entityManager.persist(pc1);
+
+            ProductoCarrito pc2 = new ProductoCarrito();
+            pc2.setCarrito(carrito1);
+            pc2.setMovil(movil3);
+            pc2.setCantidad(5);
+            entityManager.persist(pc2);
+
+
+
 
             //Una vez realizados los registros iniciales guardo el registro en la tabla Configuracion indicando que todo esta ok
             configuracion = new Configuracion();

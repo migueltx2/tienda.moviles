@@ -4,6 +4,7 @@ import com.miguel.tienda.model.Usuario;
 import com.miguel.tienda.servicios.ServicioUsuarios;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -47,5 +48,20 @@ public class ServicioUsuariosImplJPA implements ServicioUsuarios {
     @Override
     public Usuario obtenerUsuarioPorId(long id) {
         return entityManager.find(Usuario.class, id);
+    }
+
+    @Override
+    public Usuario obtenerUsuarioPorEmailYpass(String email, String pass) {
+        Query query = entityManager.createQuery("select u from Usuario u WHERE u.email = :email and u.pass = :pass");
+        //La anterior consulta de JPA seria como la SQL: Select * from usuario where email = ? and pass = ?
+        query.setParameter("email", email); //Asi asigno el :email
+        query.setParameter("pass", pass); //Asi asigno el :pass
+        List<Usuario> res = query.getResultList();
+
+        if (res.size() == 0){
+            return null;
+        }
+
+        return res.get(0);
     }
 }

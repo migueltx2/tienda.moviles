@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Tienda Online</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@hiseb/confetti@2.2.0/dist/confetti.min.js"></script>
 </head>
 
 <body class="bg-slate-50 min-h-screen flex flex-col">
@@ -30,16 +31,16 @@
             <a href="#" id="identificarme"
                 class="px-4 py-2 rounded-lg bg-sky-500 text-white font-medium hover:bg-sky-600 shadow-sm hover:shadow-md transition duration-200">IDENTIFICARME</a>
             <a href="#" id="carrito"
-                class="px-4 py-2 rounded-lg bg-sky-100 text-sky-600 font-medium hover:bg-sky-200 transition duration-200">CARRITO</a>
+                class="px-4 py-2 rounded-lg bg-sky-100 text-sky-600 font-medium hover:bg-sky-200 transition duration-200 hidden">CARRITO</a>
             <a href="#" id="pedidos"
-                class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">PEDIDOS</a>
+                class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105 hidden">PEDIDOS</a>
             <a href="#" id="datos"
-                class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">MIS
+                class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105 hidden">MIS
                 DATOS</a>
             <a href="#" id="cerrar_sesion" class="px-4 py-2 rounded-lg
        bg-slate-100 text-slate-600
        hover:bg-red-100 hover:text-red-500
-       transition duration-200">CERRAR SESION</a>
+       transition duration-200 hidden">CERRAR SESION</a>
         </div>
 
         <!-- Botón móvil -->
@@ -49,18 +50,18 @@
 
         <!-- Menu movil -->
         <div class="hidden xl:hidden flex flex-col bg-white p-5 rounded-bl-lg right-0 top-16 absolute gap-5 shadow-lg" id="menuMovil">
-            <a href="#" id="registrarme"
+            <a href="#" id="registrarmeMovil"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">REGISTRARME</a>
-            <a href="#" id="identificarme"
+            <a href="#" id="identificarmeMovil"
                 class="px-4 py-2 rounded-lg bg-sky-500 text-white font-medium hover:bg-sky-600 shadow-sm hover:shadow-md transition duration-200">IDENTIFICARME</a>
-            <a href="#" id="carrito"
+            <a href="#" id="carritoMovil"
                 class="px-4 py-2 rounded-lg bg-sky-100 text-sky-600 font-medium hover:bg-sky-200 transition duration-200">CARRITO</a>
-            <a href="#" id="pedidos"
+            <a href="#" id="pedidosMovil"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">PEDIDOS</a>
-            <a href="#" id="datos"
+            <a href="#" id="datosMovil"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">MIS
                 DATOS</a>
-            <a href="#" id="cerrar_sesion" class="px-4 py-2 rounded-lg
+            <a href="#" id="cerrar_sesionMovil" class="px-4 py-2 rounded-lg
        bg-slate-100 text-slate-600
        hover:bg-red-100 hover:text-red-500
        transition duration-200">CERRAR SESION</a>
@@ -69,7 +70,9 @@
     </div>
 
 
-
+    <div id="usuarioActual" class="ml-5 mt-4">
+        Usuario no identificado
+    </div>
 
     <div id="contenedor">
 
@@ -80,6 +83,9 @@
     <script src="librerias_js/mustache.js"></script>
 
     <script>
+        //Variables globales
+        nombre_login = "" //variable que indica el nombre del usuario si se ha identificado
+
 
         // Parte de descarga de plantillas html
 
@@ -93,14 +99,31 @@
         $.get("plantillas_html/detalles_producto.html").done(function (res) {
             plantilla_detalles_producto = res
         })
+        $.get("plantillas_html/registro_usuario.html").done(function (res) {
+            plantilla_registro_usuario = res
+        })
+        $.get("plantillas_html/identificar_usuario.html").done(function (res) {
+            plantilla_login_usuario = res
+        })
+        $.get("plantillas_html/carrito.html").done(function (res) {
+            plantilla_carrito = res
+        })
+        $.get("plantillas_html/check_out_1.html").done(function (res) {
+            plantilla_check_out_1= res
+        })
 
 
         // Parte de atencion a enlaces
 
+        function limpiarClasesContenedor() {
+            return $("#contenedor").removeClass()
+                //"grid grid-cols-5 xl:grid-cols-5 sm:grid-cols-2 flex-1 flex items-center justify-center w-full max-w-5xl mx-auto p-6"
+
+        }
+
         $("#inicio").click(
             function () {
-                $("#contenedor").removeClass("grid grid-cols-5 flex-1 flex items-center justify-center")
-                $("#contenedor").html(plantilla_inicio)
+                limpiarClasesContenedor().html(plantilla_inicio)
             }
         )
 
@@ -111,7 +134,7 @@
                     console.log(json)
                     //vamos a usar el json para listar los productos
                     resultadoMustache = Mustache.render(plantilla_productos, json)
-                    $("#contenedor").removeClass("flex-1 flex items-center justify-center")
+                    limpiarClasesContenedor()
                         .addClass("grid xl:grid-cols-5 sm:grid-cols-2")
                         .html(resultadoMustache)
 
@@ -120,7 +143,6 @@
         } //end mostrarMoviles
 
         function mostrar_detalles(id) {
-            //alert("Mostrar detalles del producto de id: " + id)
             $.getJSON("restMoviles/obtener-movil",
                 {
                     id: id
@@ -130,11 +152,45 @@
                     console.log(json)
                     //alert("json recibido, vamos a usar una plantilla de plantillas_html para mostrarlo")
                     resultadoHtml = Mustache.render(plantilla_detalles_producto, json)
-                    $("#contenedor").removeClass("grid grid-cols-5")
+                    limpiarClasesContenedor()
                         .addClass("flex-1 flex items-center justify-center")
                         .html(resultadoHtml)
                 }
             )//end done
+        }
+
+        function mostrar_formulario_registro_usuario (){
+            limpiarClasesContenedor()
+                .addClass("flex-1 flex items-center justify-center")
+                .html(plantilla_registro_usuario)
+
+            $("#form_registro_usuario").submit(
+                function(e){
+                    //codigo a ejecutar cuando se haga el submit del form
+                    e.preventDefault() //Para evitar  que el boton del form refresque la pagina
+                    //Validar los datos del form aqui
+
+                    //Lo normal es ir recogiendo campo a campo pero tenemos una cosa llamada FormData para obtener todo de una sola vez
+                    formulario = document.forms[0]
+                    formData = new FormData(formulario)
+                    console.log("BIEN, YA TENGO TODA LA INFORMACION INTRODUCIDA")
+                    console.log(Object.fromEntries(formData))
+                    //Mandar este formData a un servicio REST (UsuariosREST)
+                    $.ajax("restUsuarios/registrarUsuario", {
+                        type : "POST",
+                        data: formData,
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        success: function (res){
+                            alert(res)
+                            confetti()
+                        }
+                        
+                    })
+
+                }
+            )
         }
 
         $("#moviles").click(
@@ -144,19 +200,85 @@
         //Por defecto cuando se acceda a la web te muestre los productos
         mostrarMoviles()
 
-        $("#registrarme").click(
-            function () {
-                alert("registrarme")
-            }
+        $("#registrarme, #registrarmeMovil").click(
+            mostrar_formulario_registro_usuario
         )
-        $("#identificarme").click(
-            function () {
-                alert("inicio de sesion")
-            }
+
+        $("#identificarme, #identificarmeMovil").click(
+            mostrar_login
         )
+
+        function mostrar_login(){
+            limpiarClasesContenedor()
+                .addClass("flex-1 flex items-center justify-center")
+                .html(plantilla_login_usuario)
+            //Despues de mostrar la plantilla html de indentificar usuario
+            //Vamos a decir que hace cuando el usuario haga click en identificarme
+            $("#form_login").submit(
+                function (e){
+                    e.preventDefault()
+                    $.post("restUsuarios/identificarUsuario",
+                    {
+                        email: $("#email").val(),
+                        pass: $("#pass").val()
+                    }
+                    ).done(function (res){
+                        nombre_login = res.split(",")[1]
+                        //aprovechamos y listamos productos
+                        alert("Identificado correctamente, ya puedes agregar productos al carrito")
+                        mostrarMoviles()
+                        $("#usuarioActual").html("Bienvenido, " + nombre_login)
+                        $("#registrarme, #identificarme").addClass("hidden")
+                        $("#carrito, #pedidos, #datos, #cerrar_sesion").removeClass("hidden")
+                    })
+                }
+            )
+        }
+
+        function agregarProductoCarrito(idProducto){
+            if ( nombre_login == ""){
+                alert("Identificate primero")
+                return
+            }
+
+            //alert("Agregar producto de id: " + idProducto + " al carrito de " + nombre_login)
+            //Mandar a un servicio rest la ID y la cantidad del producto
+            cantidad = 1 //para hacer pruebas
+            $.post("restCarrito/agregarProducto", {
+                id: idProducto,
+                cantidad: 1
+            }).done(function (res){
+                alert(res)
+            })
+        }
+
+        function eliminarProductoCarrito(idProducto){
+            
+        }
+
+        function mostrar_productos_carrito(){
+            $.getJSON("restCarrito/obtenerProductos").done(
+                function(res){
+                    //console.log("json recibido: ")
+                    //console.log(res)
+                    resultadoHtml = Mustache.render(plantilla_carrito, res)
+                    limpiarClasesContenedor()
+                        .addClass("flex-1 w-full max-w-5xl mx-auto p-6")
+                        .html(resultadoHtml)
+                    $("#realizar_pedido").click(
+                        mostrar_check_out_paso_1
+                    )
+                }
+            )
+        }
+
+        function mostrar_check_out_paso_1(){
+            limpiarClasesContenedor().html(plantilla_check_out_1)
+        }
+        
         $("#carrito").click(
             function () {
-                alert("carrito")
+                mostrar_productos_carrito()
             }
         )
         $("#pedidos").click(

@@ -15,4 +15,6 @@ public interface ServicioUsuarios {
     void guardarCambiosUsuario(Usuario usuarioEditado) throws Exception;
 
     Usuario obtenerUsuarioPorId(long id);
+
+    Usuario obtenerUsuarioPorEmailYpass(String email, String pass);
 }
