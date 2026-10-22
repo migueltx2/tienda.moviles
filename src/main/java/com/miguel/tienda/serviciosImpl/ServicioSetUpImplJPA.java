@@ -1,6 +1,7 @@
 package com.miguel.tienda.serviciosImpl;
 
 import com.miguel.tienda.model.*;
+import com.miguel.tienda.servicios.ServicioPedidos;
 import com.miguel.tienda.servicios.ServicioSetUp;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
@@ -8,6 +9,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -22,6 +24,10 @@ public class ServicioSetUpImplJPA implements ServicioSetUp {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    //En el caso de los peiddos, aprovechamos y testeamos el servicio de pedidos
+    @Autowired
+    private ServicioPedidos servicioPedidos;
 
     @Override
     public void prepararRegistrosIniciales() {
@@ -118,13 +124,20 @@ public class ServicioSetUpImplJPA implements ServicioSetUp {
             pc1.setCarrito(carrito1);
             pc1.setMovil(movil1);
             pc1.setCantidad(3);
+            carrito1.getProductosCarrito().add(pc1);
             entityManager.persist(pc1);
 
             ProductoCarrito pc2 = new ProductoCarrito();
             pc2.setCarrito(carrito1);
             pc2.setMovil(movil3);
             pc2.setCantidad(5);
+            carrito1.getProductosCarrito().add(pc2);
             entityManager.persist(pc2);
+
+            //Vamos tambien a registrar un pedido a partir del servicio
+            servicioPedidos.procesarPaso1("Pedro Fernandez", "Arguelles 12", "Madrid", user1.getId());
+            servicioPedidos.procesarPaso2("Pedro Fernandez Del Soto", "4000123456789010", "VISA", user1.getId());
+            servicioPedidos.confirmarPedido(user1.getId());
 
 
 

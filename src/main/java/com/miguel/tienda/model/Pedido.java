@@ -26,7 +26,7 @@ public class Pedido {
     //Se pide en paso 2
 
     private String titularTarjeta;
-    @CreditCardNumber
+    //@CreditCardNumber
     private String numeroTarjeta;
     private String tipoTarjeta;
 

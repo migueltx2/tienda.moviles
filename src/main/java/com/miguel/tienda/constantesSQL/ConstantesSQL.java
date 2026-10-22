@@ -15,4 +15,5 @@ public class ConstantesSQL {
                     ON tv.id = pc.movil_id
                 WHERE pc.carrito_id = :carrito_id;
             """;
+    public static final String SQL_BORRAR_PRODUCTOS_CARRITO = "DELETE FROM producto_carrito WHERE carrito_id = :carrito_id";
 }
