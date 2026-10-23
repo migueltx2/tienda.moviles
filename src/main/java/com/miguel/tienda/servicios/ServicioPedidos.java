@@ -13,9 +13,11 @@ public interface ServicioPedidos {
 
 
     //Operaciones para la parte publica - ajax/api rest
-    void procesarPaso1(String nombreCompleto, String direccion, String provincia, long idUsuario);
-    void procesarPaso2(String titular, String numero, String tipoTarjeta, long idUsuario);
+    void procesarPaso1(String nombreCompleto, String direccion, String provincia, String codigoPostal,
+                       String ciudad, String correoElectronico, long idUsuario);
+    void procesarPaso2(String titular, String numero, String tipoTarjeta, String cvv, long idUsuario);
     ResumenPedido obtenerResumenPedido(long idUsuario);
+    void procesarPaso3(String eleccion, long idUsuario);
     void confirmarPedido(long idUsuario);
 
 

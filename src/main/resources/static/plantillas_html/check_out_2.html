@@ -42,9 +42,15 @@
                 <input type="text" id="titular_tarjeta" name="titular_tarjeta" autocomplete="cc-name" placeholder="Nombre que aparece en la tarjeta"
                     class="h-11 rounded-lg border border-slate-300 px-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
             </div>
-            <button type="button" id="aceptar_paso_1"
+            <div class="flex flex-col gap-2">
+                <label for="cvv_tarjeta" class="text-sm font-medium text-slate-700">CVV</label>
+                <input type="text" id="cvv_tarjeta" name="cvv" inputmode="numeric" autocomplete="cc-csc"
+                    maxlength="4" placeholder="Código de seguridad"
+                    class="h-11 rounded-lg border border-slate-300 px-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+            </div>
+            <button type="button" id="aceptar_paso_2"
                 class="mt-2 inline-flex h-12 items-center justify-center rounded-lg bg-sky-600 px-5 font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
-                Revisar pedido
+                Continuar
             </button>
             <p class="text-center text-xs text-slate-500">Tus datos de pago se utilizan únicamente para esta compra.</p>
         </form>

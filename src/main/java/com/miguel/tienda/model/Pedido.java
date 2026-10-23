@@ -21,6 +21,9 @@ public class Pedido {
     private String nombreCompleto;
     private String direccion;
     private String provincia;
+    private String codigoPostal;
+    private String Ciudad;
+    private String correoElectronico;
 
 
     //Se pide en paso 2
@@ -29,11 +32,55 @@ public class Pedido {
     //@CreditCardNumber
     private String numeroTarjeta;
     private String tipoTarjeta;
+    private String cvv;
+
+    //Se pide en el paso 3
+    private String resPregunta;
+
 
     @Id
     @GeneratedValue
     private Long id;
 
+    public String getResPregunta() {
+        return resPregunta;
+    }
+
+    public void setResPregunta(String resPregunta) {
+        this.resPregunta = resPregunta;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getCiudad() {
+        return Ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        Ciudad = ciudad;
+    }
+
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
+    }
 
     public Usuario getUsuario() {
         return usuario;

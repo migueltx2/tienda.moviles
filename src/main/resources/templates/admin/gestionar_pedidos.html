@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Pedidos</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-sky-50">
+    <div th:insert="fragments/general.html :: menu"></div>
+
+    <main class="px-4 py-6 xl:px-12">
+        <div class="mb-6 flex flex-col items-center justify-between gap-4 sm:flex-row">
+            <h1 class="text-3xl font-semibold text-slate-900">Gestion de pedidos</h1>
+        </div>
+
+        <div class="overflow-x-auto rounded-lg border border-slate-200 bg-white shadow-sm">
+            <table class="w-full text-left text-sm text-slate-700">
+                <thead class="bg-slate-100 text-xs uppercase text-slate-600">
+                    <tr>
+                        <th class="px-5 py-3">Cliente</th>
+                        <th class="px-5 py-3">Direccion</th>
+                        <th class="px-5 py-3">Codigo postal</th>
+                        <th class="px-5 py-3">Ciudad</th>
+                        <th class="px-5 py-3">Provincia</th>
+                        <th class="px-5 py-3">Correo electronico</th>
+                        <th class="px-5 py-3">Estado</th>
+                        <th class="px-5 py-3">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="p : ${pedidos}" class="border-t border-slate-100">
+                        <td class="px-5 py-4 font-medium text-slate-900" th:text="${p.nombreCompleto}"></td>
+                        <td class="px-5 py-4" th:text="${p.direccion}"></td>
+                        <td class="px-5 py-4" th:text="${p.codigoPostal}"></td>
+                        <td class="px-5 py-4" th:text="${p.ciudad}"></td>
+                        <td class="px-5 py-4" th:text="${p.provincia}"></td>
+                        <td class="px-5 py-4" th:text="${p.correoElectronico}"></td>
+                        <td class="px-5 py-4">
+                            <span class="inline-flex rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-700" th:text="${p.estado}"></span>
+                        </td>
+                        <td class="px-5 py-4">
+                            <a th:href="@{${'verDetallesPedido?id=' + p.id}}"
+                               class="inline-block rounded-md bg-sky-50 px-3 py-2 font-semibold text-sky-700 transition hover:bg-sky-100">Ver detalles</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(pedidos)}">
+                        <td colspan="8" class="px-5 py-8 text-center text-slate-500">Todavia no hay pedidos registrados.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+</body>
+</html>

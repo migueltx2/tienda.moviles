@@ -135,12 +135,12 @@ public class ServicioSetUpImplJPA implements ServicioSetUp {
             entityManager.persist(pc2);
 
             //Vamos tambien a registrar un pedido a partir del servicio
-            servicioPedidos.procesarPaso1("Pedro Fernandez", "Arguelles 12", "Madrid", user1.getId());
-            servicioPedidos.procesarPaso2("Pedro Fernandez Del Soto", "4000123456789010", "VISA", user1.getId());
+            servicioPedidos.procesarPaso1("Pedro Fernandez", "Arguelles 12", "Madrid", "28015",
+                    "Madrid", "pedro@example.com", user1.getId());
+            servicioPedidos.procesarPaso2("Pedro Fernandez Del Soto", "4000123456789010", "VISA", "123",
+                    user1.getId());
+            servicioPedidos.procesarPaso3("Android", user1.getId());
             servicioPedidos.confirmarPedido(user1.getId());
-
-
-
 
             //Una vez realizados los registros iniciales guardo el registro en la tabla Configuracion indicando que todo esta ok
             configuracion = new Configuracion();

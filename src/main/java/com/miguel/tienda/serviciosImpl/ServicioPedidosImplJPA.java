@@ -26,17 +26,19 @@ public class ServicioPedidosImplJPA implements ServicioPedidos {
 
     @Override
     public List<Pedido> obtenerPedidos() {
-        return List.of();
+        return  entityManager.createQuery("select p from Pedido p order by p.id desc").getResultList();
     }
 
     @Override
     public Pedido obtenerPedidoPorId(long id) {
-        return null;
+        return entityManager.find(Pedido.class, id);
     }
 
     @Override
     public void actualizarEstadoPedido(long id, String estado) {
-
+        Pedido p = entityManager.find(Pedido.class, id);
+        p.setEstado(estado);
+        entityManager.merge(p);
     }
 
 
@@ -44,7 +46,8 @@ public class ServicioPedidosImplJPA implements ServicioPedidos {
     //Operaciones con la parte publica
 
     @Override
-    public void procesarPaso1(String nombreCompleto, String direccion, String provincia, long idUsuario) {
+    public void procesarPaso1(String nombreCompleto, String direccion, String provincia, String codigoPostal,
+                              String ciudad, String correoElectronico, long idUsuario) {
         //Cada usuario podra tener como maximo un solo pedido en estado en proceso
         //Ese pedido es donde rellenaremos los datos de envio
         //Pago y demas, si hubiera.
@@ -54,17 +57,21 @@ public class ServicioPedidosImplJPA implements ServicioPedidos {
         p.setNombreCompleto(nombreCompleto);
         p.setDireccion(direccion);
         p.setProvincia(provincia);
+        p.setCodigoPostal(codigoPostal);
+        p.setCiudad(ciudad);
+        p.setCorreoElectronico(correoElectronico);
         entityManager.merge(p); //Actualiza o registra
     }
 
 
 
     @Override
-    public void procesarPaso2(String titular, String numero, String tipoTarjeta, long idUsuario) {
+    public void procesarPaso2(String titular, String numero, String tipoTarjeta, String cvv, long idUsuario) {
         Pedido p = obtenerPedidoActual(idUsuario);
         p.setTitularTarjeta(titular);
         p.setNumeroTarjeta(numero);
         p.setTipoTarjeta(tipoTarjeta);
+        p.setCvv(cvv);
         entityManager.merge(p);
     }
 
@@ -75,12 +82,24 @@ public class ServicioPedidosImplJPA implements ServicioPedidos {
         resumen.setNombreCompleto(p.getNombreCompleto());
         resumen.setDireccion(p.getDireccion());
         resumen.setProvincia(p.getProvincia());
+        resumen.setCodigoPostal(p.getCodigoPostal());
+        resumen.setCiudad(p.getCiudad());
+        resumen.setCorreoElectronico(p.getCorreoElectronico());
         resumen.setTipoTarjeta(p.getTipoTarjeta());
         resumen.setTitularTarjeta(p.getTitularTarjeta());
         resumen.setNumeroTarjeta(p.getNumeroTarjeta());
+        resumen.setCvv(p.getCvv());
         resumen.setMoviles(servicioCarrito.obtenerProductosCarrito(idUsuario));
 
-        return null;
+        return resumen;
+    }
+
+    @Override
+    public void procesarPaso3(String eleccion, long idUsuario) {
+        Pedido p = obtenerPedidoActual(idUsuario);
+        p.setResPregunta(eleccion);
+
+        entityManager.merge(p);
     }
 
     @Override
@@ -102,7 +121,6 @@ public class ServicioPedidosImplJPA implements ServicioPedidos {
         //Borrar los productos del carrito del usuario
         entityManager.createNativeQuery(ConstantesSQL.SQL_BORRAR_PRODUCTOS_CARRITO).setParameter("carrito_id", c.getId()).executeUpdate();
         p.setEstado(EstadosPedido.Completado.toString());
-
 
     }
 

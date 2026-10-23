@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del pedido</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-sky-50">
+    <div th:insert="fragments/general.html :: menu"></div>
+
+    <main class="mx-auto max-w-7xl px-4 py-6 xl:px-12">
+        <div class="mb-6 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+            <div>
+                <p class="text-sm font-semibold uppercase tracking-wide text-sky-700">Pedido <span th:text="${pedido.id}"></span></p>
+                <h1 class="mt-1 text-3xl font-semibold text-slate-900">Detalles del pedido</h1>
+            </div>
+            <span class="inline-flex w-fit rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-800" th:text="${pedido.estado}"></span>
+        </div>
+
+        <div class="mb-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <section class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 class="mb-4 text-lg font-semibold text-slate-900">Datos de envio</h2>
+                <dl class="space-y-3 text-sm">
+                    <div>
+                        <dt class="text-slate-500">Destinatario</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.nombreCompleto}"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Direccion</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.direccion}"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Codigo postal</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.codigoPostal}"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Ciudad</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.ciudad}"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Provincia</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.provincia}"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Correo electronico</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.correoElectronico}"></dd>
+                    </div>
+                </dl>
+            </section>
+
+            <section class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+                <h2 class="mb-4 text-lg font-semibold text-slate-900">Datos de pago</h2>
+                <dl class="space-y-3 text-sm">
+                    <div>
+                        <dt class="text-slate-500">Titular</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.titularTarjeta}"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Tipo de tarjeta</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.tipoTarjeta}"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">Numero de tarjeta</dt>
+                        <dd class="mt-0.5 font-medium tracking-wide text-slate-800" th:text="${pedido.numeroTarjeta}"></dd>
+                    </div>
+                    <div>
+                        <dt class="text-slate-500">CVV</dt>
+                        <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.cvv}"></dd>
+                    </div>
+                </dl>
+            </section>
+        </div>
+
+        <section class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+            <h2 class="px-5 py-4 text-lg font-semibold text-slate-900">Productos del pedido</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-slate-700">
+                    <thead class="bg-slate-100 text-xs uppercase text-slate-600">
+                        <tr>
+                            <th class="px-5 py-3">Producto</th>
+                            <th class="px-5 py-3">Modelo</th>
+                            <th class="px-5 py-3">Almacenamiento</th>
+                            <th class="px-5 py-3">RAM</th>
+                            <th class="px-5 py-3">Peso</th>
+                            <th class="px-5 py-3">Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="productoPedido : ${pedido.productosPedido}" class="border-t border-slate-100">
+                            <td class="px-5 py-4 font-medium text-slate-900" th:text="${productoPedido.movil.nombre}"></td>
+                            <td class="px-5 py-4" th:text="${productoPedido.movil.modelo}"></td>
+                            <td class="px-5 py-4"><span th:text="${productoPedido.movil.almacenamiento}"></span> GB</td>
+                            <td class="px-5 py-4"><span th:text="${productoPedido.movil.ram}"></span> GB</td>
+                            <td class="px-5 py-4"><span th:text="${productoPedido.movil.peso}"></span> g</td>
+                            <td class="px-5 py-4 font-semibold" th:text="${productoPedido.cantidad}"></td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(pedido.productosPedido)}">
+                            <td colspan="6" class="px-5 py-8 text-center text-slate-500">Este pedido no tiene productos.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>
