@@ -1,5 +1,10 @@
 
 <div class="flex flex-col gap-4">
+    {{^.}}
+    <p class="rounded-xl border border-slate-200 bg-white p-6 text-center font-medium text-slate-600 shadow-sm">
+        Your cart is empty.
+    </p>
+    {{/.}}
     {{#.}}
     <div class="flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-sky-200 hover:shadow-md sm:flex-row sm:items-center sm:justify-between sm:px-6">
         <div class="min-w-0 flex-1">
@@ -18,14 +23,14 @@
                 <dd class="mt-1 text-lg font-semibold text-slate-800">{{CANTIDAD}}</dd>
             </div>
         </dl>
-        <button type="button"
+        <button type="button" onclick="eliminarProductoCarrito({{MOVIL_ID}})"
             class="inline-flex items-center justify-center rounded-lg border border-red-200 px-4 py-2 text-sm font-medium text-red-600 transition hover:border-red-300 hover:bg-red-50 hover:text-red-700">
             Remove product
         </button>
     </div>
     {{/.}}
     <div class="flex justify-end border-t border-slate-200 pt-5">
-        <button type="button" onclick="eliminarProductoCarrito({{movil_id}})" id="realizar_pedido"
+        <button type="button" id="realizar_pedido"
             class="inline-flex items-center justify-center rounded-lg bg-sky-600 px-6 py-3 font-semibold text-white shadow-sm transition hover:bg-sky-700 hover:shadow-md">
             Place order
         </button>

@@ -1,19 +1,42 @@
 <div class="flex w-full flex-col items-center px-4 py-10">
-    <form class="w-full max-w-md">
-        <div class="flex flex-col gap-2">
-            <label for="preferencia_movil" class="text-sm font-medium text-slate-700">
-                Préférez-vous un téléphone Android ou Apple ?
-            </label>
-            <select id="preferencia_movil" name="preferencia_movil"
-                class="h-11 rounded-lg border border-slate-300 bg-white px-3 text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
-                <option value="" selected disabled>Choisissez une option</option>
-                <option value="android">Android</option>
-                <option value="apple">iOS</option>
-            </select>
+    <section class="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 shadow-lg sm:p-8">
+        <div class="mb-8">
+            <p class="text-sm font-semibold uppercase tracking-widest text-sky-700">Passer la commande</p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Préférences</h1>
+            <p class="mt-2 text-slate-500">Indiquez votre système d’exploitation préféré pour continuer.</p>
         </div>
-        <button type="button"
-            class="mt-5 inline-flex h-12 w-full items-center justify-center rounded-lg bg-sky-600 px-5 font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
-            Continuer
-        </button>
-    </form>
+        <ol class="mb-8 grid grid-cols-4 gap-2" aria-label="Étapes de la commande">
+            <li class="flex items-center gap-2 text-sm font-medium text-emerald-700">
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-emerald-100">✓</span>
+                <span class="hidden sm:inline">Livraison</span>
+            </li>
+            <li class="flex items-center gap-2 text-sm font-medium text-emerald-700">
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-emerald-100">✓</span>
+                <span class="hidden sm:inline">Paiement</span>
+            </li>
+            <li aria-current="step" class="flex items-center gap-2 text-sm font-semibold text-sky-700">
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-sky-600 text-white">3</span>
+                <span class="hidden sm:inline">Préférence</span>
+            </li>
+            <li class="flex items-center gap-2 text-sm text-slate-400">
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-slate-100">4</span>
+                <span class="hidden sm:inline">Confirmation</span>
+            </li>
+        </ol>
+        <form class="flex flex-col gap-5">
+            <div class="flex flex-col gap-2">
+                <label for="preferencia_movil" class="text-sm font-medium text-slate-700">Préférez-vous un téléphone Android ou Apple ?</label>
+                <select id="preferencia_movil" name="preferencia_movil" required
+                    class="h-11 rounded-lg border border-slate-300 bg-white px-3 text-slate-900 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+                    <option value="" selected disabled>Choisissez une option</option>
+                    <option value="android">Android</option>
+                    <option value="apple">iOS</option>
+                </select>
+            </div>
+            <button type="button" id="aceptar_paso_3"
+                class="mt-2 inline-flex h-12 items-center justify-center rounded-lg bg-sky-600 px-5 font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                Continuer vers le récapitulatif
+            </button>
+        </form>
+    </section>
 </div>

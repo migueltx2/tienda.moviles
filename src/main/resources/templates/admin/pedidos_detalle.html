@@ -15,7 +15,40 @@
                 <p class="text-sm font-semibold uppercase tracking-wide text-sky-700">Pedido <span th:text="${pedido.id}"></span></p>
                 <h1 class="mt-1 text-3xl font-semibold text-slate-900">Detalles del pedido</h1>
             </div>
-            <span class="inline-flex w-fit rounded-full bg-sky-100 px-4 py-2 text-sm font-semibold text-sky-800" th:text="${pedido.estado}"></span>
+            <div class="flex flex-col gap-2 sm:items-end">
+                <label for="select_estado" class="text-sm font-medium text-slate-700">Estado del pedido</label>
+                <select id="select_estado" th:field="${pedido.estado}"
+                        class="w-full min-w-48 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 shadow-sm transition focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-200 sm:w-auto">
+                    <option th:each="e : ${estados}" th:text="${e}" th:value="${e.key}"></option>
+                </select>
+            </div>
+            <input type="hidden" id="id_pedido" th:field="${pedido.id}" >
+
+            <script src="https://code.jquery.com/jquery-4.0.0.js"
+                    integrity="sha256-9fsHeVnKBvqh3FB2HYu7g2xseAZ5MlN6Kz/qnkASV8U=" crossorigin="anonymous"></script>
+
+            <script>
+                $("#select_estado").change(
+                    function(){
+                        //alert("cambiar estado al pedido")
+                        estado_seleccionado = $("#select_estado").find(":selected").val();
+                        id_pedido = $("#id_pedido").val()
+                        alert("cambiar a estado: " + estado_seleccionado +
+                            " id pedido: " + id_pedido)
+                        $.post("restPedido/actualizarEstadoPedido",
+                            {
+                                id: id_pedido,
+                                estado: estado_seleccionado
+                            }).done(function(res){
+                            if(res!="ok"){
+                                alert(res)
+                            }else{
+                                alert("estado actualizado correctamente")
+                            }
+                        })//end done
+                    }
+                )
+            </script>
         </div>
 
         <div class="mb-6 grid grid-cols-1 gap-5 lg:grid-cols-2">
@@ -77,7 +110,7 @@
             <dl class="space-y-3 text-sm">
                 <div>
                     <dt class="text-slate-500">¿Prefieres móviles con Android o iOS?</dt>
-                    <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.res_pregunta}"></dd>
+                    <dd class="mt-0.5 font-medium text-slate-800" th:text="${pedido.resPregunta}"></dd>
                 </div>
             </dl>
         </div>

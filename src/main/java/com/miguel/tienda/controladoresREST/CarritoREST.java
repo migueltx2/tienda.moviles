@@ -37,8 +37,12 @@ public class CarritoREST {
         );
     }
 
-    
-
+    @RequestMapping("borrarProducto")
+    public String borrarProducto(@RequestParam("id") long idProducto, HttpServletRequest request) {
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario_identificado");
+        servicioCarrito.eliminarProducto(idProducto, usuario.getId());
+        return "ok";
+    }
 
 
 

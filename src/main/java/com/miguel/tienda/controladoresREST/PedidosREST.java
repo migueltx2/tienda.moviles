@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.net.http.HttpRequest;
@@ -37,11 +38,20 @@ public class PedidosREST {
     }
 
     @RequestMapping("procesarPaso3")
-    public String procesarPaso3(HttpServletRequest request){
+    public String procesarPaso3(String eleccion, HttpServletRequest request){
+        Usuario u = (Usuario) request.getSession().getAttribute("usuario_identificado");
+        servicioPedidos.procesarPaso3(eleccion, u.getId());
+        return "ok";
+    }
+
+    @RequestMapping("procesarPaso4")
+    public String procesarPaso4(HttpServletRequest request){
         Usuario u = (Usuario) request.getSession().getAttribute("usuario_identificado");
         servicioPedidos.confirmarPedido(u.getId());
         return "ok";
     }
+
+
 
 
 
