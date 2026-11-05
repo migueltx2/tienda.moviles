@@ -30,14 +30,17 @@ public class ServicioCarritoImplJPA implements ServicioCarrito {
         //Esto da problemas
         //Carrito c = uBaseDatos.getCarrito();
         //Esto es mas seguro
-        Carrito c = entityManager.createQuery("SELECT c FROM Carrito c WHERE c.usuario.id = :idUsuario", Carrito.class)
+        List<Carrito> carritos = entityManager.createQuery("SELECT c FROM Carrito c WHERE c.usuario.id = :idUsuario", Carrito.class)
                 .setParameter("idUsuario", idUsuario)
-                .getSingleResult();
-        if ( c == null ){
+                .getResultList();
+        Carrito c;
+        if (carritos.isEmpty()){
             //Si el usuario no tiene un carrito asociado, lo creamos y lo guardamos en DB
             c = new Carrito();
             c.setUsuario(uBaseDatos);
             entityManager.persist(c);
+        } else {
+            c = carritos.get(0);
         }
         //Ver si el producto que se quiere agregar ya esta en el carrito
         //Si lo esta, hay que incrementar su cantidad
@@ -67,23 +70,21 @@ public class ServicioCarritoImplJPA implements ServicioCarrito {
         //Sacar los productos del carrito a partir de la id de usuario
         //Usuario u = (Usuario) entityManager.find(Usuario.class, idUsario);
         //Carrito c = u.getCarrito();
-        Carrito c = entityManager.createQuery("SELECT c FROM Carrito c WHERE c.usuario.id = :idUsuario", Carrito.class)
+        List<Carrito> carritos = entityManager.createQuery("SELECT c FROM Carrito c WHERE c.usuario.id = :idUsuario", Carrito.class)
                 .setParameter("idUsuario", idUsuario)
-                .getSingleResult();
-        List<Map<String, Object>> res = null;
-        if (c != null){
-            Query query = entityManager.createNativeQuery(
-                    ConstantesSQL.SQL_OBTENER_PRODUCTOS_CARRITO_JSON
-            );
-            query.setParameter("carrito_id", c.getId());
-
-            NativeQueryImpl nativeQuery = (NativeQueryImpl) query;
-            nativeQuery.setTupleTransformer(AliasToEntityMapResultTransformer.INSTANCE);
-            res = nativeQuery.getResultList();
+                .getResultList();
+        if (carritos.isEmpty()){
+            return List.of();
         }
+        Carrito c = carritos.get(0);
+        Query query = entityManager.createNativeQuery(
+                ConstantesSQL.SQL_OBTENER_PRODUCTOS_CARRITO_JSON
+        );
+        query.setParameter("carrito_id", c.getId());
 
-
-        return res;
+        NativeQueryImpl nativeQuery = (NativeQueryImpl) query;
+        nativeQuery.setTupleTransformer(AliasToEntityMapResultTransformer.INSTANCE);
+        return nativeQuery.getResultList();
     }
 
     @Override

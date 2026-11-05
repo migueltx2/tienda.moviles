@@ -34,7 +34,7 @@ public class UsuariosREST {
 
     }
 
-    //Recordatorio: Todos estos metodos se llaman desde el js de index.html
+    //Recordatorio: Todos estos metodos se llaman desde el js de index_es.html
     @RequestMapping("identificarUsuario")
     public String identificarUsuario(
             @RequestParam("email") String email,
@@ -54,6 +54,12 @@ public class UsuariosREST {
         }
         return  respuesta;
     }
+
+    //@RequestMapping("cerrarSesion")
+    //public String cerrarSesion(HttpServletRequest request){
+        //request.getSession().invalidate();
+
+    //}
 
 
 }

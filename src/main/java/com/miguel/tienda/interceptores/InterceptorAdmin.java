@@ -28,7 +28,7 @@ public class InterceptorAdmin implements HandlerInterceptor {
 
         //Este interceptor se va a ejecutar antes del acceso a cualquier ruta. Ver si se quiera acceder a /admin
 
-        System.out.println("Hola desde el interceptor");
+        //System.out.println("Hola desde el interceptor");
         if (request.getRequestURI().contains("/admin/")){
             //miro si la variable de sesion admin existe y vale ok, eso quiere decir que el usuario introdujo correctamente
             //el pass en el form de login_admin

@@ -27,8 +27,13 @@ public class ControladorMoviles {
     private ServicioCategorias servicioCategorias;
 
     @RequestMapping("gestionarMoviles")
-    public String gestionarMoviles(Model model){
-        model.addAttribute("moviles", servicioMoviles.obtenerMoviles());
+    public String gestionarMoviles(@RequestParam(name = "titulo", defaultValue = "") String titulo, @RequestParam(value = "comienzo", defaultValue = "0") int comienzo, Model model){
+        model.addAttribute("moviles", servicioMoviles.obtenerMovilesPorTituloYcomienzoYfin(titulo, comienzo, 10));
+        //Vamos a pasarle la variable siguiente para que la vista sepa como formar el enlace siguiente
+        model.addAttribute("siguiente", comienzo + 10);
+        model.addAttribute("anterior", comienzo - 10);
+        model.addAttribute("total", servicioMoviles.obtenerTotalMoviles(titulo));
+        model.addAttribute("titulo", titulo);
         return "admin/gestionar_productos";
     }
 
@@ -65,7 +70,7 @@ public class ControladorMoviles {
 
         System.out.println("id recibida para borrar registro" + id);
         servicioMoviles.borrarMovil(id);
-        return gestionarMoviles(model);
+        return gestionarMoviles("", 0, model);
     }
 
     @RequestMapping("editarMovil")
@@ -94,7 +99,7 @@ public class ControladorMoviles {
                 return "admin/editar_producto";
               } else {
                 servicioMoviles.guardarCambiosMovil(movilEditar);
-                return gestionarMoviles(model);
+                return gestionarMoviles("", 0, model);
               }                          
          }
 

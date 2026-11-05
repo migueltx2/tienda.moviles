@@ -8,7 +8,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
-import org.hibernate.query.NativeQuery;
 import org.hibernate.query.sql.internal.NativeQueryImpl;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
 import org.springframework.stereotype.Service;
@@ -52,6 +51,31 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
     }
 
     @Override
+    public List<Movil> obtenerMovilesPorTitulo(String titulo) {
+        return List.of();
+    }
+
+
+    @Override
+    public List<Movil> obtenerMovilesPorTituloYcomienzoYfin(String titulo, int comienzo, int resultadosPorPagina) {
+        return entityManager.createQuery("select m from Movil m where lower(m.nombre) like lower(:titulo)", Movil.class)
+            .setParameter("titulo", "%" + titulo + "%")
+            .setFirstResult(comienzo)
+            .setMaxResults(resultadosPorPagina)
+            .getResultList();
+
+    }
+
+    @Override
+    public List<Movil> obtenerMovilesPorTitulo(String titulo, int comienzo, int resultadosPorPagina) {
+        return entityManager.createQuery("select m from Movil m where lower(m.nombre) like lower(:titulo)", Movil.class)
+                .setParameter("titulo", "%" + titulo + "%")
+                .setFirstResult(comienzo)
+                .setMaxResults(resultadosPorPagina)
+                .getResultList();
+    }
+
+    @Override
     public Movil obtenerMovilPorId(long id) {
         return entityManager.find(Movil.class, id);
     }
@@ -89,7 +113,7 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
     }
 
     @Override
-    public List<Map<String, Object>> obtenerJSONmoviles() {
+    public List<Map<String, Object>> obtenerJSONmoviles(String titulo, int comienzo) {
         //Con JPA hemos asociado categoria a producto
         //Problema: El json recibido en portada  no es correcto
         //Solucion: Dejar claro en una consulta a base de datos que informacion va a formar el json que necesitamos importar
@@ -100,6 +124,8 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
         // json.put(56,50); //da error porque lo primero no es un string
         //para tener el control total, vamos a usar SQL
         Query consulta = entityManager.createNativeQuery(ConstantesSQL.SQL_OBTENER_MOVILES_JSON);
+        consulta.setParameter("titulo", "%" + titulo + "%");
+        consulta.setParameter("comienzo", + comienzo );
         //usar la consulta directamente es mucho mas lioso
         //que lo siguiente
         NativeQueryImpl nativeQuery = (NativeQueryImpl) consulta;
@@ -113,6 +139,13 @@ public class ServicioMovilesImplJPA implements ServicioMoviles {
     @Override
     public Map<String, Object> obtenerJSONMovilPorId(Long id) {
         return (Map<String, Object>) ((NativeQueryImpl)entityManager.createNativeQuery(ConstantesSQL.SQL_OBTENER_MOVIL_JSON)).setParameter("id", id).setTupleTransformer(AliasToEntityMapResultTransformer.INSTANCE).getResultList().get(0);
+    }
+
+    @Override
+    public int obtenerTotalMoviles(String nombre) {
+        Query q = entityManager.createNativeQuery(ConstantesSQL.SQL_OBTENER_TOTAL_MOVILES);
+        q.setParameter("titulo", "%" + nombre.toLowerCase() + "%");
+        return Integer.parseInt(q.getSingleResult().toString());
     }
 
 

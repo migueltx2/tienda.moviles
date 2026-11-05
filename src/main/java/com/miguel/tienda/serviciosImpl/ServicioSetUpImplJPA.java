@@ -142,6 +142,23 @@ public class ServicioSetUpImplJPA implements ServicioSetUp {
             servicioPedidos.procesarPaso3("Android", user1.getId());
             servicioPedidos.confirmarPedido(user1.getId());
 
+            //Registrar 100 productos de prueba, para probar paginacion
+            String titulo = "Movil ";
+            int precio = 1;
+            for (int i = 0; i < 100; i++) {
+                Movil mNuevo = new Movil();
+                mNuevo.setNombre(titulo + i);
+                mNuevo.setPrecio(precio);
+                mNuevo.setRam(10);
+                mNuevo.setCategoria(samsung);
+                mNuevo.setAlmacenamiento(200);
+                mNuevo.setModelo("SM300" + i);
+                mNuevo.setPeso(200);
+                mNuevo.setImagenPortada(leerImagenInicial("http://localhost:8080/imagenes_productos_iniciales/3.jpg"));
+                entityManager.persist(mNuevo);
+
+            }
+
             //Una vez realizados los registros iniciales guardo el registro en la tabla Configuracion indicando que todo esta ok
             configuracion = new Configuracion();
             configuracion.setRegistrosiIniciales(true);

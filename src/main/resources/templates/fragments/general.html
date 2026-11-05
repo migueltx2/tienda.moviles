@@ -10,22 +10,30 @@
 </head>
 
 <body class="bg-sky-50">
-    <div th:fragment="menu" class="flex justify-center items-center p-5" >
-        <div class="flex gap-3 bg-white shadow-xl rounded-2xl p-3">
-            <a href="inicioAdmin"
+    <div th:fragment="menu" class="flex justify-center items-center p-5">
+        <div class="flex flex-wrap items-center justify-center gap-3 bg-white shadow-xl rounded-2xl p-3">
+            <a th:text="#{volver.tienda}" href="inicioAdmin"
                 class="px-4 py-2 rounded-lg bg-sky-500 text-white font-medium hover:bg-sky-600 shadow-sm hover:shadow-md transition duration-200">&lt;- Volver</a>
-            <a href="gestionarMoviles"
+            <a th:text="#{gestionar.moviles}" href="gestionarMoviles"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">Gestionar
                 moviles</a>
-            <a href="gestionarUsuarios"
+            <a th:text="#{gestionar.usuarios}" href="gestionarUsuarios"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">Gestionar
                 usuarios</a>
-            <a href="gestionarCategorias"
+            <a th:text="#{gestionar.categorias}" href="gestionarCategorias"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">Gestionar
                 categorias</a>
-            <a href="gestionarPedidos"
+            <a th:text="#{gestionar.pedidos}" href="gestionarPedidos"
                 class=" px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">Gestionar
                 pedidos</a>
+            <div class="flex items-center gap-1 rounded-xl bg-slate-100 p-1" aria-label="Seleccionar idioma">
+                <a href="?idioma=es"
+                    class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-sky-600 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400">Español</a>
+                <a href="?idioma=en"
+                    class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-sky-600 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400">English</a>
+                <a href="?idioma=fr"
+                    class="rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-white hover:text-sky-600 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-400">Français</a>
+            </div>
         </div>
     </div>
 

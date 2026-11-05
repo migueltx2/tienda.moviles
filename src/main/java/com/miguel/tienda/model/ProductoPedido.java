@@ -9,7 +9,7 @@ public class ProductoPedido {
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(referencedColumnName = "id")
     private Movil movil;
 

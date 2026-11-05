@@ -1,6 +1,7 @@
 package com.miguel.tienda.controladoresREST;
 
 import com.miguel.tienda.model.Movil;
+import com.miguel.tienda.responseData.InfoMoviles;
 import com.miguel.tienda.servicios.ServicioMoviles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +28,23 @@ public class MovilesREST {
     //}
 
     @RequestMapping("listar")
-    public List<Map<String,Object>> listar(){
-        return servicioMoviles.obtenerJSONmoviles();
+    public InfoMoviles listar(
+            @RequestParam(name = "titulo", defaultValue = "" ) String titulo,
+            @RequestParam(name = "comienzo", defaultValue = "0") int comienzo ){
+        int totalMoviles = servicioMoviles.obtenerTotalMoviles(titulo);
+
+        List<Map<String, Object>> moviles = servicioMoviles.obtenerJSONmoviles(titulo, comienzo);
+        //ahora necesitamos devolverle al js estas dos cosas
+        //para ello vamos a crear un nuevo tipo de dato
+        InfoMoviles info = new InfoMoviles();
+        info.setTotalMoviles(totalMoviles);
+        info.setMoviles(moviles);
+        return info;
+
+
+
+        //return servicioMoviles.obtenerJSONmoviles( titulo, comienzo );
+
     }
 
     //Ahora que se ha complicado un poco, vamos a tomar mas control en deovlver el json con el listado de videojuegos

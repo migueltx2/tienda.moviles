@@ -1,0 +1,63 @@
+<div class="flex w-full flex-col items-center px-4 py-10 sm:py-14">
+    <section class="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 shadow-lg sm:p-8">
+        <div class="mb-8">
+            <p class="text-sm font-semibold uppercase tracking-widest text-sky-700">Realizar pedido</p>
+            <h1 class="mt-2 text-2xl font-bold text-slate-900 sm:text-3xl">Datos de envío</h1>
+            <p class="mt-2 text-slate-500">Introduce los datos de envío para continuar con tu compra.</p>
+        </div>
+
+        <ol class="mb-8 grid grid-cols-3 gap-2" aria-label="Progreso del pedido">
+            <li aria-current="step" class="flex items-center gap-2 text-sm font-semibold text-sky-700">
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-sky-600 text-white">1</span>
+                <span class="hidden sm:inline">Envío</span>
+            </li>
+            <li class="flex items-center gap-2 text-sm text-slate-400">
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-slate-100">2</span>
+                <span class="hidden sm:inline">Pago</span>
+            </li>
+            <li class="flex items-center gap-2 text-sm text-slate-400">
+                <span class="flex size-8 shrink-0 items-center justify-center rounded-full bg-slate-100">3</span>
+                <span class="hidden sm:inline">Confirmación</span>
+            </li>
+        </ol>
+
+        <form class="flex flex-col gap-5">
+            <div class="flex flex-col gap-2">
+                <label for="campo_nombre" class="text-sm font-medium text-slate-700">Nombre completo</label>
+                <input type="text" id="campo_nombre" name="nombre" autocomplete="name" placeholder="Tu nombre y apellidos"
+                    class="h-11 rounded-lg border border-slate-300 px-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="campo_direccion" class="text-sm font-medium text-slate-700">Dirección</label>
+                <input type="text" id="campo_direccion" name="direccion" autocomplete="street-address" placeholder="Calle, número, piso..."
+                    class="h-11 rounded-lg border border-slate-300 px-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="campo_provincia" class="text-sm font-medium text-slate-700">Provincia</label>
+                <input type="text" id="campo_provincia" name="provincia" autocomplete="address-level1" placeholder="Tu provincia"
+                    class="h-11 rounded-lg border border-slate-300 px-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="campo_codigo_postal" class="text-sm font-medium text-slate-700">Código postal</label>
+                <input type="text" id="campo_codigo_postal" name="codigoPostal" autocomplete="postal-code"
+                    placeholder="Tu código postal"
+                    class="h-11 rounded-lg border border-slate-300 px-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="campo_ciudad" class="text-sm font-medium text-slate-700">Ciudad</label>
+                <input type="text" id="campo_ciudad" name="ciudad" autocomplete="address-level2" placeholder="Tu ciudad"
+                    class="h-11 rounded-lg border border-slate-300 px-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+            </div>
+            <div class="flex flex-col gap-2">
+                <label for="campo_correo_electronico" class="text-sm font-medium text-slate-700">Correo electrónico</label>
+                <input type="email" id="campo_correo_electronico" name="correoElectronico" autocomplete="email"
+                    placeholder="tu@correo.com"
+                    class="h-11 rounded-lg border border-slate-300 px-3 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-sky-500 focus:ring-2 focus:ring-sky-100">
+            </div>
+            <button type="button" id="aceptar_paso_1"
+                class="mt-2 inline-flex h-12 items-center justify-center rounded-lg bg-sky-600 px-5 font-semibold text-white shadow-sm transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                Continuar al pago
+            </button>
+        </form>
+    </section>
+</div>

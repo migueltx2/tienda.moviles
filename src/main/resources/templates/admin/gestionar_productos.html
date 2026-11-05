@@ -14,13 +14,44 @@
         <div th:insert="fragments/general.html :: menu"></div>
     </div>
 
+    <div class="px-4 pt-6 xl:px-12">
+        <form action="gestionarMoviles" role="search"
+            class="mx-auto flex max-w-2xl flex-col gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-end">
+            <div class="flex-1">
+                <label for="titulo" class="mb-1.5 block text-sm font-medium text-slate-700">Buscar por título</label>
+                <input type="text" name="titulo" id="titulo" placeholder="Ej. Galaxy S24" th:value="${titulo}"
+                    class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-200">
+            </div>
+            <button type="submit"
+                class="rounded-lg bg-sky-600 px-5 py-2.5 font-semibold text-white transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                Buscar
+            </button>
+        </form>
+    </div>
+
+    <!-- Boton Registrar Movil -->
     <div class="flex flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row xl:px-12">
         <h1 class="text-3xl font-semibold text-slate-900">Gestion de moviles</h1>
         <a href="registrarMovil"
             class="inline-block rounded-lg bg-sky-600 px-4 py-2 font-semibold text-white transition duration-200 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">Registrar movil</a>
     </div>
 
-    
+    <div class="mx-4 mb-6 flex flex-col gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between xl:mx-12">
+        <p class="text-sm text-slate-600">
+            Total de resultados:
+            <span class="ml-1 font-semibold text-slate-900" th:text="${total}"></span>
+        </p>
+        <nav class="flex items-center gap-2" aria-label="Paginación de móviles">
+            <a th:if="${anterior >= 0}" th:href="@{${'gestionarMoviles?comienzo=' + anterior}}"
+                class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-sky-500 hover:bg-sky-50 hover:text-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                Anterior
+            </a>
+            <a th:if="${siguiente < total}" th:href="@{${'gestionarMoviles?comienzo=' + siguiente}}"
+                class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2">
+                Siguiente
+            </a>
+        </nav>
+    </div>
 
     <!-- Contenedor grid -->
     <div class="grid grid-cols-1 gap-5 px-4 pb-10 sm:grid-cols-2 lg:grid-cols-4 xl:px-12">
@@ -134,4 +165,3 @@
         </div>
 
     </div> -->
-
