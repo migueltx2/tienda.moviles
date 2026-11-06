@@ -35,7 +35,3 @@ Cada producto registrado en el catálogo contiene la siguiente información deta
 * Precio
 * Categoría
 * Imagen descriptiva
-
-## Autor
-
-* **Miguel Sancho** — 2º GS (Curso 2026)
