@@ -55,11 +55,11 @@ public class UsuariosREST {
         return  respuesta;
     }
 
-    //@RequestMapping("cerrarSesion")
-    //public String cerrarSesion(HttpServletRequest request){
-        //request.getSession().invalidate();
-
-    //}
+    @RequestMapping("cerrarSesion")
+    public String cerrarSesion(HttpServletRequest request){
+        request.getSession().invalidate();
+        return "ok";
+    }
 
 
 }

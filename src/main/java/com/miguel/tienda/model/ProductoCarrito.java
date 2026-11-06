@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class ProductoCarrito {
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn
     private Movil movil;
 

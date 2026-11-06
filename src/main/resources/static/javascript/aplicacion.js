@@ -7,8 +7,10 @@ comienzo_resultados = 0
 
 // Carga de plantillas HTML
 // plantilla_inicio = $.get("plantillas_html/inicio.html")
+let plantilla_inicio
 $.get(`plantillas_html_${codigo_idioma}/inicio.html`).done(function (res) {
     plantilla_inicio = res
+    mostrarInicio()
 })
 $.get(`plantillas_html_${codigo_idioma}/listado_productos.html`).done(function (res) {
     plantilla_productos = res
@@ -68,7 +70,7 @@ function mostrarMoviles() {
         } else {
             $("#enlace_anterior").show()
         }
-        if ((comienzo_resultados < 10) < totalMoviles) {
+        if (comienzo_resultados + json.moviles.length < totalMoviles) {
             $("#enlace_siguiente").show()
         } else {
             $("#enlace_siguiente").hide()
@@ -117,8 +119,16 @@ function mostrar_formulario_registro_usuario() {
         e.preventDefault()
 
         // FormData recoge todos los campos del formulario.
-        formulario = document.forms[0]
-        formData = new FormData(formulario)
+        const formulario = $("#form_registro_usuario")[0]
+        if (!validarNombre($("#nombre").val())
+            || !validarApellidos($("#apellidos").val())
+            || !validarEmail($("#email").val())
+            || !validarTelefono($("#telefono").val())
+            || !validarContrasena($("#pass").val())) {
+            return
+        }
+
+        const formData = new FormData(formulario)
         console.log("BIEN, YA TENGO TODA LA INFORMACION INTRODUCIDA")
         console.log(Object.fromEntries(formData))
 
@@ -153,9 +163,15 @@ function mostrar_login() {
 
     $("#form_login").submit(function (e) {
         e.preventDefault()
+        const email = $("#email").val()
+        const contrasena = $("#pass").val()
+        if (!validarEmail(email) || !validarContrasena(contrasena)) {
+            return
+        }
+
         $.post("restUsuarios/identificarUsuario", {
-            email: $("#email").val(),
-            pass: $("#pass").val()
+            email: email,
+            pass: contrasena
         }).done(function (res) {
             nombre_login = res.split(",")[1]
             alert("Identificado correctamente, ya puedes agregar productos al carrito")
@@ -167,14 +183,33 @@ function mostrar_login() {
             }
 
             mostrarMoviles()
-            $("#usuarioActual").html("Bienvenido, " + nombre_login)
+            const mensajesBienvenida = {
+                es: "Bienvenido, ",
+                en: "Welcome, ",
+                fr: "Bienvenue, "
+            }
+            $("#usuarioActual").text((mensajesBienvenida[codigo_idioma] || mensajesBienvenida.es) + nombre_login)
             $("#registrarme, #identificarme").addClass("hidden")
             $("#carrito, #pedidos, #datos, #cerrar_sesion").removeClass("hidden")
+            actualizarContadorCarrito()
         })
     })
 }
 
 // Carrito
+function mostrarContadorCarrito(cantidad) {
+    $("#contadorCarrito, #contadorCarritoMovil")
+        .text(cantidad)
+        .toggleClass("hidden", cantidad === 0)
+        .toggleClass("inline-flex", cantidad > 0)
+}
+
+function actualizarContadorCarrito() {
+    $.getJSON("restCarrito/obtenerProductos").done(function (productos) {
+        mostrarContadorCarrito(productos.length)
+    })
+}
+
 function agregarProductoCarrito(idProducto, boton) {
     const cantidad = Number($(boton).siblings(".cantidad").val());
     if (nombre_login == "") {
@@ -188,6 +223,7 @@ function agregarProductoCarrito(idProducto, boton) {
         cantidad: cantidad
     }).done(function (res) {
         alert(res)
+        actualizarContadorCarrito()
     })
 }
 
@@ -205,6 +241,7 @@ function eliminarProductoCarrito(idProducto) {
 
 function mostrar_productos_carrito() {
     $.getJSON("restCarrito/obtenerProductos").done(function (res) {
+        mostrarContadorCarrito(res.length)
         // console.log("json recibido: ")
         // console.log(res)
         resultadoHtml = Mustache.render(plantilla_carrito, res)
@@ -230,7 +267,17 @@ function enviar_datos_paso1() {
     ciudad = $("#campo_ciudad").val()
     correo_electronico = $("#campo_correo_electronico").val()
 
-    // TODO: Validaciones.
+    // Validaciones
+    if (!validarNombre(nombreCompleto)
+        || !validarDireccion(direccion)
+        || !validarLocalidad(provincia, "La provincia")
+        || !validarCodigoPostal(codigo_postal)
+        || !validarLocalidad(ciudad, "La ciudad")
+        || !validarEmail(correo_electronico)) {
+        return
+    }
+
+
     $.post("restPedido/procesarPaso1", {
         nombre: nombreCompleto,
         direccion: direccion,
@@ -251,11 +298,17 @@ function enviar_datos_paso1() {
 
 function enviar_datos_paso2() {
     tipo_tarjeta = $("#tipo_tarjeta").val()
-    numero_tarjeta = $("#numero_tarjeta").val()
+    numero_tarjeta = $("#numero_tarjeta").val().replace(/[ -]/g, "")
     titular_tarjeta = $("#titular_tarjeta").val()
     cvv_tarjeta = $("#cvv_tarjeta").val()
 
-    // Validaciones pendientes.
+    if (!validarTipoTarjeta(tipo_tarjeta)
+        || !validarNumeroTarjeta(numero_tarjeta)
+        || !validarTitularTarjeta(titular_tarjeta)
+        || !validarCvv(cvv_tarjeta)) {
+        return
+    }
+
     $.post("restPedido/procesarPaso2", {
         tarjeta: tipo_tarjeta,
         numero: numero_tarjeta,
@@ -273,8 +326,7 @@ function enviar_datos_paso2() {
 
 function enviar_datos_paso3(resumenPedido) {
     const eleccion = $("#preferencia_movil").val()
-    if (!eleccion) {
-        alert("Selecciona una preferencia para continuar")
+    if (!validarPreferencia(eleccion)) {
         return
     }
 
@@ -298,6 +350,7 @@ function enviar_datos_paso4() {
         if (res == "ok") {
             confetti()
             alert("Pedido completado! Puedes seguir comprando")
+            mostrarContadorCarrito(0)
             mostrarMoviles()
         }
     }).fail(function () {
@@ -313,12 +366,17 @@ $("#inicio").click(function () {
 $("#moviles").click(mostrarMoviles)
 
 // Al acceder a la web mostramos los productos.
-mostrarMoviles()
+//mostrarMoviles()
+
+function mostrarInicio(){
+    limpiarClasesContenedor().html(plantilla_inicio)
+}
 
 $("#registrarme, #registrarmeMovil").click(mostrar_formulario_registro_usuario)
 $("#identificarme, #identificarmeMovil").click(mostrar_login)
 
-$("#carrito").click(function () {
+$("#carrito, #carritoMovil").click(function (event) {
+    event.preventDefault()
     mostrar_productos_carrito()
 })
 $("#pedidos").click(function () {
@@ -327,12 +385,15 @@ $("#pedidos").click(function () {
 $("#datos").click(function () {
     alert("datos del usuario")
 })
-$("#cerrar_sesion").click(function () {
-    alert("cierre de sesion")
-    $.post("restUsuarios/cerrarSesion").done(function (res) {
-        if (res == "ok") {
+$("#cerrar_sesion, #cerrar_sesionMovil").click(function () {
+    alert("cerrar sesion")
+    $.post("restUsuarios/cerrarSesion").done(
+        function (res){
+            if (res == "ok"){
+                location.reload()
+            }
         }
-    })
+    )
 })
 
 // Menu movil

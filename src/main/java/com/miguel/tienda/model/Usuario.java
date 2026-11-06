@@ -42,6 +42,8 @@ public class Usuario {
     private Carrito carrito;
 
 
+
+
     public Carrito getCarrito() {
         return carrito;
     }

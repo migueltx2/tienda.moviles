@@ -38,7 +38,7 @@
             <a href="#" id="identificarme"
                 class="px-4 py-2 rounded-lg bg-sky-500 text-white font-medium hover:bg-sky-600 shadow-sm hover:shadow-md transition duration-200">SE CONNECTER</a>
             <a href="#" id="carrito"
-                class="px-4 py-2 rounded-lg bg-sky-100 text-sky-600 font-medium hover:bg-sky-200 transition duration-200 hidden">PANIER</a>
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-100 text-sky-600 font-medium hover:bg-sky-200 transition duration-200 hidden">PANIER<span id="contadorCarrito" class="hidden min-w-5 h-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold leading-none text-white" aria-live="polite"></span></a>
             <a href="#" id="pedidos"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105 hidden">COMMANDES</a>
             <a href="#" id="datos"
@@ -64,13 +64,13 @@
         </button>
 
         <!-- Menu mobile -->
-        <div class="hidden xl:hidden flex flex-col bg-white p-5 rounded-bl-lg right-0 top-16 absolute gap-5 shadow-lg" id="menuMovil">
+        <div class="hidden xl:hidden flex flex-col bg-white p-5 rounded-bl-lg right-0 top-16 absolute gap-5 shadow-lg z-99" id="menuMovil">
             <a href="#" id="registrarmeMovil"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">S'INSCRIRE</a>
             <a href="#" id="identificarmeMovil"
                 class="px-4 py-2 rounded-lg bg-sky-500 text-white font-medium hover:bg-sky-600 shadow-sm hover:shadow-md transition duration-200">SE CONNECTER</a>
             <a href="#" id="carritoMovil"
-                class="px-4 py-2 rounded-lg bg-sky-100 text-sky-600 font-medium hover:bg-sky-200 transition duration-200">PANIER</a>
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-100 text-sky-600 font-medium hover:bg-sky-200 transition duration-200">PANIER<span id="contadorCarritoMovil" class="hidden min-w-5 h-5 items-center justify-center rounded-full bg-red-600 px-1 text-xs font-bold leading-none text-white" aria-live="polite"></span></a>
             <a href="#" id="pedidosMovil"
                 class="px-4 py-2 rounded-lg bg-slate-100 text-slate-600 hover:bg-sky-100 hover:text-sky-600 transition duration-200 hover:scale-105">COMMANDES</a>
             <a href="#" id="datosMovil"
@@ -102,6 +102,7 @@
     <script src="librerias_js/mustache.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.8/dist/js.cookie.min.js"></script>
     <script>codigo_idioma = "fr"</script>
+    <script src="javascript/validaciones.js"></script>
     <script src="javascript/aplicacion.js"></script>
 
 </body>
