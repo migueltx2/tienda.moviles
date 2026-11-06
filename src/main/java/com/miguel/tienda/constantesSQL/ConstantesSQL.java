@@ -1,7 +1,7 @@
 package com.miguel.tienda.constantesSQL;
 
 public class ConstantesSQL {
-    public final static String SQL_OBTENER_MOVILES_JSON = "SELECT tv.id, tv.nombre, tv.precio,c.nombre as categoria FROM MOVIL as tv, CATEGORIA as c where tv.categoria_id = c.id and lower(tv.nombre) like lower(:titulo) limit :comienzo , 10;";
+    public final static String SQL_OBTENER_MOVILES_JSON = "SELECT tv.id, tv.nombre, tv.precio, tv.almacenamiento, tv.ram, c.nombre as categoria FROM MOVIL as tv, CATEGORIA as c where tv.categoria_id = c.id and lower(tv.nombre) like lower(:titulo) limit :comienzo , 10;";
 
     public final static String SQL_OBTENER_MOVIL_JSON =   "SELECT tv.id, tv.nombre, tv.precio, tv.modelo, tv.almacenamiento, tv.ram, tv.peso, c.nombre as categoria FROM MOVIL as tv, CATEGORIA as c where tv.categoria_id = c.id and tv.id = :id;";
     public static final String SQL_OBTENER_PRODUCTOS_CARRITO_JSON = """ 

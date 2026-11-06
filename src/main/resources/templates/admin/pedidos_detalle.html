@@ -19,7 +19,7 @@
                 <label for="select_estado" class="text-sm font-medium text-slate-700">Estado del pedido</label>
                 <select id="select_estado" th:field="${pedido.estado}"
                         class="w-full min-w-48 rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-800 shadow-sm transition focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-200 sm:w-auto">
-                    <option th:each="e : ${estados}" th:text="${e}" th:value="${e.key}"></option>
+                    <option th:each="e : ${estados}" th:text="${e.key}" th:value="${e.key}"></option>
                 </select>
             </div>
             <input type="hidden" id="id_pedido" th:field="${pedido.id}" >

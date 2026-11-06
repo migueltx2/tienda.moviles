@@ -38,9 +38,6 @@ public class ControladorPedidos {
         estados.put(EstadosPedido.Incidencia.name(), "Incidencia en el pedido");
         model.addAttribute("estados", estados);
 
-
-
-
         return "admin/pedidos_detalle";
     }
 
